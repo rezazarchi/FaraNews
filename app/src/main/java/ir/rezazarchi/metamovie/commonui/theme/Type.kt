@@ -1,4 +1,4 @@
-package ir.rezazarchi.metamovie.ui.theme
+package ir.rezazarchi.metamovie.commonui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

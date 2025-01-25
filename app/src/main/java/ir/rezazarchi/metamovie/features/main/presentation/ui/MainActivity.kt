@@ -1,4 +1,4 @@
-package ir.rezazarchi.metamovie
+package ir.rezazarchi.metamovie.features.main.presentation.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ir.rezazarchi.metamovie.ui.theme.MetaMovieTheme
+import ir.rezazarchi.metamovie.commonui.theme.MetaMovieTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

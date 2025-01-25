@@ -1,4 +1,4 @@
-package ir.rezazarchi.metamovie.ui.theme
+package ir.rezazarchi.metamovie.commonui.theme
 
 import android.app.Activity
 import android.os.Build
