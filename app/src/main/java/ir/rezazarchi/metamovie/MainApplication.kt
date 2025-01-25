@@ -1,6 +1,8 @@
 package ir.rezazarchi.metamovie
 
 import android.app.Application
+import ir.rezazarchi.metamovie.core.di.jsonModule
+import ir.rezazarchi.metamovie.core.di.retrofitModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.androix.startup.KoinStartup
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -11,6 +13,10 @@ class MainApplication : Application(), KoinStartup {
 
     override fun onKoinStartup() = koinConfiguration {
         androidContext(this@MainApplication)
+        modules(
+            retrofitModule,
+            jsonModule,
+        )
     }
 
 }
