@@ -1,5 +1,6 @@
 package ir.rezazarchi.metamovie.core.di
 
+import ir.rezazarchi.metamovie.core.utils.Constant.API_BASE_URL_VALUE
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,7 +22,7 @@ val retrofitModule = module {
     single<Long>(named(READ_TIMEOUT)) { 30 * 1000 }
     single<Long>(named(WRITE_TIMEOUT)) { 10 * 1000 }
     single<Long>(named(CONNECTION_TIMEOUT)) { 10 * 1000 }
-    single(named(BASE_URL)) { "https://pixabay.com/api/v1/" }
+    single(named(BASE_URL)) { API_BASE_URL_VALUE }
 
     factory<Interceptor>(named(HTTP_LOGGING_INTERCEPTOR)) {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)
