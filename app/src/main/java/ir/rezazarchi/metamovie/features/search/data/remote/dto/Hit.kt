@@ -9,7 +9,7 @@ import androidx.annotation.Keep
 @Serializable
 data class Hit(
     @SerialName("id")
-    val id: Int?, // 143486
+    val id: Long,
     @SerialName("pageURL")
     val pageURL: String?, // https://pixabay.com/videos/id-143486/
     @SerialName("type")

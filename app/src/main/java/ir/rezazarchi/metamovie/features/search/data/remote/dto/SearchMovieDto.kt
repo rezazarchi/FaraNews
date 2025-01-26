@@ -13,5 +13,5 @@ data class SearchMovieDto(
     @SerialName("totalHits")
     val totalHits: Int?, // 500
     @SerialName("hits")
-    val hits: List<Hit?>?
+    val hits: List<Hit>?
 )
