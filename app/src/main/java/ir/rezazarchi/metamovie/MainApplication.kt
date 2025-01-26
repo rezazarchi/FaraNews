@@ -3,6 +3,9 @@ package ir.rezazarchi.metamovie
 import android.app.Application
 import ir.rezazarchi.metamovie.core.di.jsonModule
 import ir.rezazarchi.metamovie.core.di.retrofitModule
+import ir.rezazarchi.metamovie.database.di.bookmarkedDaoModule
+import ir.rezazarchi.metamovie.database.di.databaseFactoryModule
+import ir.rezazarchi.metamovie.database.di.moviesDaoModule
 import ir.rezazarchi.metamovie.features.details.data.remote.di.movieDetailsApiServiceModule
 import ir.rezazarchi.metamovie.features.search.data.remote.di.searchMoviesApiServiceModule
 import org.koin.android.ext.koin.androidContext
@@ -20,6 +23,9 @@ class MainApplication : Application(), KoinStartup {
             jsonModule,
             searchMoviesApiServiceModule,
             movieDetailsApiServiceModule,
+            databaseFactoryModule,
+            moviesDaoModule,
+            bookmarkedDaoModule,
         )
     }
 
