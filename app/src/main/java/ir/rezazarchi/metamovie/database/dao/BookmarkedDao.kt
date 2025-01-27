@@ -15,7 +15,7 @@ interface BookmarkedDao {
     fun getAllBookmarkedMovies(): Flow<List<BookmarkedMovieEntity>>
 
     @Query("SELECT EXISTS(SELECT 1 FROM bookmarked_movies WHERE movieId = :movieId)")
-    fun isBookmarked(movieId: Int): Flow<Boolean>
+    fun isBookmarked(movieId: Long): Flow<Boolean>
 
     @Upsert
     suspend fun upsertBookmarkedMovie(vararg bookmarkedMovie: BookmarkedMovieEntity)

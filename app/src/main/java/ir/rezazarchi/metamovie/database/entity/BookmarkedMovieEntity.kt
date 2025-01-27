@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey
 
 @Keep
 @Entity(tableName = "bookmarked_movies")
-class BookmarkedMovieEntity {
+data class BookmarkedMovieEntity(
     @PrimaryKey
     var movieId: Long = 0
-
-}
+)

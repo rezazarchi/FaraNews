@@ -6,6 +6,7 @@ import ir.rezazarchi.metamovie.core.di.retrofitModule
 import ir.rezazarchi.metamovie.database.di.bookmarkedDaoModule
 import ir.rezazarchi.metamovie.database.di.databaseFactoryModule
 import ir.rezazarchi.metamovie.database.di.moviesDaoModule
+import ir.rezazarchi.metamovie.features.bookmark.data.repository.di.bookmarkedMoviesRepositoryModule
 import ir.rezazarchi.metamovie.features.details.data.remote.di.movieDetailsApiServiceModule
 import ir.rezazarchi.metamovie.features.details.data.repository.di.movieDetailsRepositoryModule
 import ir.rezazarchi.metamovie.features.search.data.remote.di.searchMoviesApiServiceModule
@@ -30,6 +31,7 @@ class MainApplication : Application(), KoinStartup {
             bookmarkedDaoModule,
             searchMoviesRepositoryModule,
             movieDetailsRepositoryModule,
+            bookmarkedMoviesRepositoryModule,
         )
     }
 
