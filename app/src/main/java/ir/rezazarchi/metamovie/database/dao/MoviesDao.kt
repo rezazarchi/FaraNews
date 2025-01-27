@@ -15,6 +15,9 @@ interface MoviesDao {
     @Query("SELECT * FROM movie WHERE tags LIKE '%' || :tag || '%'")
     fun getMovieByTag(tag: String): Flow<List<MovieEntity>>
 
+    @Query("SELECT * FROM movie WHERE id = :id")
+    fun getMovieById(id: Long): Flow<MovieEntity>
+
     @Upsert
     suspend fun upsertMovies(vararg movie: MovieEntity)
 

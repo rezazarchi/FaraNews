@@ -7,6 +7,7 @@ import ir.rezazarchi.metamovie.database.di.bookmarkedDaoModule
 import ir.rezazarchi.metamovie.database.di.databaseFactoryModule
 import ir.rezazarchi.metamovie.database.di.moviesDaoModule
 import ir.rezazarchi.metamovie.features.details.data.remote.di.movieDetailsApiServiceModule
+import ir.rezazarchi.metamovie.features.details.data.repository.di.movieDetailsRepositoryModule
 import ir.rezazarchi.metamovie.features.search.data.remote.di.searchMoviesApiServiceModule
 import ir.rezazarchi.metamovie.features.search.data.repository.di.searchMoviesRepositoryModule
 import org.koin.android.ext.koin.androidContext
@@ -28,6 +29,7 @@ class MainApplication : Application(), KoinStartup {
             moviesDaoModule,
             bookmarkedDaoModule,
             searchMoviesRepositoryModule,
+            movieDetailsRepositoryModule,
         )
     }
 
