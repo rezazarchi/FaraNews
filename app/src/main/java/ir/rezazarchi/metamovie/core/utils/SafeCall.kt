@@ -26,6 +26,7 @@ suspend inline fun <reified T> safeCall(
     } catch (e: SerializationException) {
         Result.Error(NetworkError.SERIALIZATION)
     } catch (e: Exception) {
+        e.printStackTrace()
         coroutineContext.ensureActive()
         Result.Error(NetworkError.UNKNOWN)
     }

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MovieDetailsApiService {
-    @GET("")
+    @GET(".")
     suspend fun getMovieDetails(
         @Query("id") movieId: Int,
         @Query("key") apiKey: String,
