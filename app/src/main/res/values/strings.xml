@@ -13,4 +13,10 @@
     <string name="error_serialization">Serialization Error. Please try again later.</string>
     <string name="error_unknown">Unknown Error</string>
 
+    <!--  UI strings  -->
+    <string name="search_hint">Search query here …</string>
+    <string name="close_search_hint">Close search</string>
+    <string name="remove_from_bookmark">Remove from bookmarks</string>
+    <string name="add_to_bookmark">Add to bookmarks</string>
+
 </resources>
