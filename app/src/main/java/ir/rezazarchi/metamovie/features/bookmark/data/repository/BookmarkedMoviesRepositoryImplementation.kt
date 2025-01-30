@@ -3,6 +3,7 @@ package ir.rezazarchi.metamovie.features.bookmark.data.repository
 import ir.rezazarchi.metamovie.core.data.Result
 import ir.rezazarchi.metamovie.database.dao.BookmarkedDao
 import ir.rezazarchi.metamovie.database.entity.BookmarkedMovieEntity
+import ir.rezazarchi.metamovie.features.bookmark.data.mapper.BookmarkedMoviesMapper.toBookmarkedMovieDetailed
 import ir.rezazarchi.metamovie.features.bookmark.domain.model.BookmarkedMovie
 import ir.rezazarchi.metamovie.features.bookmark.domain.repo.BookmarkedMoviesRepository
 import kotlinx.coroutines.flow.map
@@ -28,4 +29,10 @@ class BookmarkedMoviesRepositoryImplementation(
     override suspend fun removeBookmarkMovie(movie: BookmarkedMovie) {
         bookmarkedDao.deleteBookmarkedMovie(BookmarkedMovieEntity(movie))
     }
+
+    override fun getAllBookmarkedMovieDetailed() =
+        bookmarkedDao.getAllBookmarkedMoviesDetailed().map { movieEntities ->
+            Result.Success(movieEntities.map { it.toBookmarkedMovieDetailed() })
+        }
+
 }
