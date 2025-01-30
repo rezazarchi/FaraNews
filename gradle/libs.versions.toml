@@ -68,3 +68,11 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+
+[bundles]
+retrofit = ["okhttp", "mockwebserver", "logging-interceptor", "retrofit2-kotlinx-serialization-converter", "retrofit"]
+koin = ["koin-android", "koin-androidx-compose", "koin-core", "koin-compose-viewmodel", "koin-androidx-startup"]
+coil = ["coil-compose", "coil-network-okhttp"]
+media = ["androidx-media3-ui", "androidx-media3-exoplayer"]
+room = ["androidx-room-ktx", "androidx-room-runtime"]
