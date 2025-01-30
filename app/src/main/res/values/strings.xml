@@ -20,5 +20,9 @@
     <string name="add_to_bookmark">Add to bookmarks</string>
     <string name="search_results">Search</string>
     <string name="favorites">Favorites</string>
+    <string name="back">back</string>
+    <string name="views_count">Views</string>
+    <string name="likes_count">Likes</string>
+    <string name="comments_count">Comments</string>
 
 </resources>

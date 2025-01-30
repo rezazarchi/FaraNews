@@ -11,6 +11,8 @@ import ir.rezazarchi.metamovie.features.bookmark.domain.di.bookmarksUseCasesModu
 import ir.rezazarchi.metamovie.features.bookmark.presentation.viewmode.bookmarkedViewModelModule
 import ir.rezazarchi.metamovie.features.details.data.remote.di.movieDetailsApiServiceModule
 import ir.rezazarchi.metamovie.features.details.data.repository.di.movieDetailsRepositoryModule
+import ir.rezazarchi.metamovie.features.details.domain.di.movieDetailsUseCaseModule
+import ir.rezazarchi.metamovie.features.details.presentation.viewmode.movieDetailsViewModelModule
 import ir.rezazarchi.metamovie.features.search.data.remote.di.searchMoviesApiServiceModule
 import ir.rezazarchi.metamovie.features.search.data.repository.di.searchMoviesRepositoryModule
 import ir.rezazarchi.metamovie.features.search.domain.di.searchMoviesUseCaseModule
@@ -40,6 +42,8 @@ class MainApplication : Application(), KoinStartup {
             searchMoviesUseCaseModule,
             bookmarksUseCasesModule,
             bookmarkedViewModelModule,
+            movieDetailsUseCaseModule,
+            movieDetailsViewModelModule,
         )
     }
 
