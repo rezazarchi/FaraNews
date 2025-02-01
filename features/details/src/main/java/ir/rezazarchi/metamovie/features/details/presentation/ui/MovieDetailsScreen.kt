@@ -1,5 +1,8 @@
 package ir.rezazarchi.metamovie.features.details.presentation.ui
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,100 +78,111 @@ fun MovieDetailsScreen(
     onToggleBookmark: (Long, Boolean) -> Unit,
     onBackClicked: () -> Unit,
 ) {
-    if (state.isLoading) {
-        Box(
-            modifier = modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    } else {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
-        ) {
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+    AnimatedContent(targetState = state.isLoading) { isLoading ->
+        if (isLoading) {
+            Box(
+                modifier = modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                IconButton(onClick = onBackClicked) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back),
-                    )
-                }
-                IconButton(onClick = {
-                    onToggleBookmark(state.movieDetails!!.id, state.isBookmarked)
-                }) {
-                    Icon(
-                        imageVector = if (state.isBookmarked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                        contentDescription = if (state.isBookmarked) stringResource(
-                            R.string.remove_from_bookmark
+                CircularProgressIndicator()
+            }
+        } else {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    IconButton(onClick = onBackClicked) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
                         )
-                        else stringResource(R.string.add_to_bookmark),
-                        tint = Color.Red,
+                    }
+                    IconButton(onClick = {
+                        onToggleBookmark(state.movieDetails!!.id, state.isBookmarked)
+                    }) {
+                        val scale by animateFloatAsState(
+                            targetValue = if (state.isBookmarked) 1.2f else 1f,
+                            animationSpec = tween(durationMillis = 300),
+                            label = "Bookmark Scale"
+                        )
+                        Icon(
+                            imageVector = if (state.isBookmarked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                            contentDescription = if (state.isBookmarked) stringResource(
+                                R.string.remove_from_bookmark
+                            )
+                            else stringResource(R.string.add_to_bookmark),
+                            tint = Color.Red,
+                            modifier = Modifier.graphicsLayer {
+                                scaleX = scale
+                                scaleY = scale
+                            }
+                        )
+                    }
+                }
+
+                state.movieDetails?.videoUrl?.let {
+                    VideoPlayer(
+                        url = it,
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f)
                     )
                 }
-            }
 
-            state.movieDetails?.videoUrl?.let {
-                VideoPlayer(
-                    url = it,
+                Text(
+                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+                    text = "Uploaded by: ${state.movieDetails?.userNameUploader}",
+                    style = MaterialTheme.typography.titleLarge,
+                )
+
+                FlowRow(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f)
-                )
-            }
-
-            Text(
-                modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                text = "Uploaded by: ${state.movieDetails?.userNameUploader}",
-                style = MaterialTheme.typography.titleLarge,
-            )
-
-            FlowRow(
-                modifier = Modifier
-                    .padding(vertical = 8.dp, horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                state.movieDetails?.tags?.fastForEach {
-                    SuggestionChip(
-                        onClick = {},
-                        label = {
-                            Text(
-                                text = it,
-                                fontSize = 12.sp,
-                            )
-                        })
+                        .padding(vertical = 8.dp, horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    state.movieDetails?.tags?.fastForEach {
+                        SuggestionChip(
+                            onClick = {},
+                            label = {
+                                Text(
+                                    text = it,
+                                    fontSize = 12.sp,
+                                )
+                            })
+                    }
                 }
-            }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp, horizontal = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                StatisticItem(
-                    icon = Icons.Default.Face,
-                    count = state.movieDetails?.movieStatistics?.numberOfViews,
-                    label = stringResource(R.string.views_count),
-                )
-                StatisticItem(
-                    icon = Icons.Default.Favorite,
-                    count = state.movieDetails?.movieStatistics?.numberOfLikes,
-                    label = stringResource(R.string.likes_count),
-                )
-                StatisticItem(
-                    icon = Icons.Default.MailOutline,
-                    count = state.movieDetails?.movieStatistics?.numberOfComments,
-                    label = stringResource(R.string.comments_count),
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp, horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    StatisticItem(
+                        icon = Icons.Default.Face,
+                        count = state.movieDetails?.movieStatistics?.numberOfViews,
+                        label = stringResource(R.string.views_count),
+                    )
+                    StatisticItem(
+                        icon = Icons.Default.Favorite,
+                        count = state.movieDetails?.movieStatistics?.numberOfLikes,
+                        label = stringResource(R.string.likes_count),
+                    )
+                    StatisticItem(
+                        icon = Icons.Default.MailOutline,
+                        count = state.movieDetails?.movieStatistics?.numberOfComments,
+                        label = stringResource(R.string.comments_count),
+                    )
+                }
             }
         }
     }

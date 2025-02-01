@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ir.rezazarchi.metamovie.core.utils.UiText
+import ir.rezazarchi.metamovie.features.bookmark.presentation.ui.BookmarkedScreenRoot
 import ir.rezazarchi.metamovie.features.search.presentation.ui.SearchScreenRoot
 
 @Composable
@@ -84,7 +85,7 @@ fun TabbedScreen(
                 }
 
                 1 -> {
-                    ir.rezazarchi.metamovie.features.bookmark.presentation.ui.BookmarkedScreenRoot(
+                    BookmarkedScreenRoot(
                         onMovieClick = onMovieClick,
                     )
                 }

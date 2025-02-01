@@ -126,6 +126,7 @@ fun SearchScreen(
                     ListItem(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .animateItem()
                             .clickable {
                                 onMovieClick(searchedMovie.id)
                             },

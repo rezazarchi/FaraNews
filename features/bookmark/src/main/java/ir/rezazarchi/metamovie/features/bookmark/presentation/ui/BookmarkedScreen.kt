@@ -71,6 +71,7 @@ fun BookmarkedScreen(
             ListItem(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .animateItem()
                     .clickable {
                         onMovieClick(movie.id)
                     },

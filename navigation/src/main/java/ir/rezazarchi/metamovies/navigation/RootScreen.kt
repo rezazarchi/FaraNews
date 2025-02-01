@@ -1,5 +1,7 @@
 package ir.rezazarchi.metamovies.navigation
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -34,6 +36,8 @@ fun RootScreen(modifier: Modifier = Modifier) {
         NavHost(
             navController = navController,
             startDestination = NavigationRoute.MovieList,
+            enterTransition = { slideInHorizontally() },
+            exitTransition = { slideOutHorizontally() },
         ) {
             composable<NavigationRoute.MovieList> {
                 TabbedScreen(
