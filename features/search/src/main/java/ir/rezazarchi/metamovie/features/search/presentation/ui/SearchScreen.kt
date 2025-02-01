@@ -1,5 +1,6 @@
 package ir.rezazarchi.metamovie.features.search.presentation.ui
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,6 +44,7 @@ import androidx.compose.ui.util.fastForEach
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.rememberAsyncImagePainter
 import ir.rezazarchi.metamovie.R
+import ir.rezazarchi.metamovie.commonui.components.EmptyListPlaceHolder
 import ir.rezazarchi.metamovie.core.utils.ObserveAsEvents
 import ir.rezazarchi.metamovie.core.utils.UiText
 import ir.rezazarchi.metamovie.features.search.presentation.fake.FakeSearchScreenData
@@ -120,75 +123,89 @@ fun SearchScreen(
             isRefreshing = state.isLoading,
             onRefresh = { loadListData(state.query) },
         ) {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.movies, key = { it.searchedMovie.id }) { movie ->
-                    val searchedMovie = movie.searchedMovie
-                    ListItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateItem()
-                            .clickable {
-                                onMovieClick(searchedMovie.id)
-                            },
-                        headlineContent = {
-                            Text(text = searchedMovie.userNameUploader)
-                        },
-                        supportingContent = {
-                            FlowRow(
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                maxItemsInEachRow = 3,
-                                maxLines = 1,
-                            ) {
-                                searchedMovie.tags.fastForEach {
-                                    SuggestionChip(
-                                        shape = RoundedCornerShape(4.dp),
-                                        onClick = {
-                                            onTagClicked(it)
-                                        },
-                                        label = {
-                                            Text(
-                                                text = it,
-                                                style = MaterialTheme.typography.labelSmall,
-                                                maxLines = 1,
-                                            )
-                                        })
-                                }
-                            }
-                        },
-                        leadingContent = {
-                            Image(
-                                modifier = Modifier
-                                    .size(56.dp)
-                                    .align(Alignment.Center)
-                                    .clip(RoundedCornerShape(10)),
-                                contentScale = ContentScale.Crop,
-                                painter = rememberAsyncImagePainter(
-                                    model = searchedMovie.videoThumbnail,
-                                    placeholder = painterResource(R.drawable.local_movies),
-                                    error = painterResource(R.drawable.local_movies),
-                                    fallback = painterResource(R.drawable.local_movies),
-                                ),
-                                contentDescription = searchedMovie.tags.firstOrNull(),
-                            )
-                        },
-                        trailingContent = {
-                            IconButton(
-                                onClick = {
-                                    onToggleBookmark(searchedMovie.id, !movie.bookmarked)
-                                },
-                            ) {
-                                Icon(
-                                    imageVector = if (movie.bookmarked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                                    contentDescription = if (movie.bookmarked) stringResource(
-                                        R.string.remove_from_bookmark
-                                    )
-                                    else stringResource(R.string.add_to_bookmark),
-                                    tint = Color.Red,
-                                )
-                            }
-                        },
+            AnimatedContent(targetState = state.movies.isEmpty()) { isListEmpty ->
+                if (isListEmpty) {
+                    EmptyListPlaceHolder(
+                        modifier = Modifier,
+                        icon = Icons.AutoMirrored.Outlined.List,
+                        title = stringResource(ir.rezazarchi.metamovie.features.search.R.string.empty_search_list_title),
+                        subtitle = stringResource(ir.rezazarchi.metamovie.features.search.R.string.empty_search_list_subtitle),
                     )
-                    HorizontalDivider()
+                } else {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(state.movies, key = { it.searchedMovie.id }) { movie ->
+                            val searchedMovie = movie.searchedMovie
+                            ListItem(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .animateItem()
+                                    .clickable {
+                                        onMovieClick(searchedMovie.id)
+                                    },
+                                headlineContent = {
+                                    Text(text = searchedMovie.userNameUploader)
+                                },
+                                supportingContent = {
+                                    FlowRow(
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                        maxItemsInEachRow = 3,
+                                        maxLines = 1,
+                                    ) {
+                                        searchedMovie.tags.fastForEach {
+                                            SuggestionChip(
+                                                shape = RoundedCornerShape(4.dp),
+                                                onClick = {
+                                                    onTagClicked(it)
+                                                },
+                                                label = {
+                                                    Text(
+                                                        text = it,
+                                                        style = MaterialTheme.typography.labelSmall,
+                                                        maxLines = 1,
+                                                    )
+                                                })
+                                        }
+                                    }
+                                },
+                                leadingContent = {
+                                    Image(
+                                        modifier = Modifier
+                                            .size(56.dp)
+                                            .align(Alignment.Center)
+                                            .clip(RoundedCornerShape(10)),
+                                        contentScale = ContentScale.Crop,
+                                        painter = rememberAsyncImagePainter(
+                                            model = searchedMovie.videoThumbnail,
+                                            placeholder = painterResource(R.drawable.local_movies),
+                                            error = painterResource(R.drawable.local_movies),
+                                            fallback = painterResource(R.drawable.local_movies),
+                                        ),
+                                        contentDescription = searchedMovie.tags.firstOrNull(),
+                                    )
+                                },
+                                trailingContent = {
+                                    IconButton(
+                                        onClick = {
+                                            onToggleBookmark(
+                                                searchedMovie.id,
+                                                !movie.bookmarked
+                                            )
+                                        },
+                                    ) {
+                                        Icon(
+                                            imageVector = if (movie.bookmarked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                                            contentDescription = if (movie.bookmarked) stringResource(
+                                                R.string.remove_from_bookmark
+                                            )
+                                            else stringResource(R.string.add_to_bookmark),
+                                            tint = Color.Red,
+                                        )
+                                    }
+                                },
+                            )
+                            HorizontalDivider()
+                        }
+                    }
                 }
             }
         }

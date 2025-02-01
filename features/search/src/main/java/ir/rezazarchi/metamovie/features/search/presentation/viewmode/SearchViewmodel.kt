@@ -29,8 +29,8 @@ import kotlinx.coroutines.launch
 
 class SearchViewmodel(
     private val searchMoviesUseCase: SearchMoviesUseCase,
-    private val bookmarkUseCase: ir.rezazarchi.metamovie.bookmark.domain.usecase.BookmarkedMoviesUseCase,
-    private val toggleBookmarkUseCase: ir.rezazarchi.metamovie.bookmark.domain.usecase.ToggleBookmarkUseCase,
+    private val bookmarkUseCase: BookmarkedMoviesUseCase,
+    private val toggleBookmarkUseCase: ToggleBookmarkUseCase,
 ) : ViewModel() {
 
     private val searchResultFlow = MutableStateFlow<List<SearchedMovie>>(emptyList())
@@ -100,6 +100,12 @@ class SearchViewmodel(
         }
         searchMoviesUseCase(query).onEach {
             it.onSuccess { searchedMovies ->
+                _state.update {
+                    it.copy(
+                        error = null,
+                        isLoading = false,
+                    )
+                }
                 searchResultFlow.update {
                     searchedMovies
                 }

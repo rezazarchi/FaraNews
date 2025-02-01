@@ -3,5 +3,6 @@
 
     <string name="search_hint">Search query here …</string>
     <string name="close_search_hint">Close search</string>
-
+    <string name="empty_search_list_title">No item to show.</string>
+    <string name="empty_search_list_subtitle">Please try a new query.</string>
 </resources>

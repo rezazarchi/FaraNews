@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="empty_bookmark_list_title">No bookmark to show.</string>
+    <string name="empty_bookmark_list_subtitle">Please bookmark a movie.</string>
+    <string name="remove_from_bookmark">Remove from bookmarks</string>
+
+</resources>

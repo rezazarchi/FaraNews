@@ -1,5 +1,6 @@
 package ir.rezazarchi.metamovie.features.bookmark.presentation.ui
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,7 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.rememberAsyncImagePainter
-import ir.rezazarchi.metamovie.R
+import ir.rezazarchi.metamovie.commonui.components.EmptyListPlaceHolder
+import ir.rezazarchi.metamovie.features.bookmark.R
 import ir.rezazarchi.metamovie.features.bookmark.presentation.viewmode.BookmarkedContracts.BookmarkedEvents
 import ir.rezazarchi.metamovie.features.bookmark.presentation.viewmode.BookmarkedContracts.BookmarkedState
 import ir.rezazarchi.metamovie.features.bookmark.presentation.viewmode.BookmarkedViewModel
@@ -66,68 +69,80 @@ fun BookmarkedScreen(
     onRemoveBookmark: (Long) -> Unit,
     onMovieClick: (Long) -> Unit,
 ) {
-    LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(state.movies, key = { it.id }) { movie ->
-            ListItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .animateItem()
-                    .clickable {
-                        onMovieClick(movie.id)
-                    },
-                headlineContent = {
-                    Text(text = movie.userNameUploader)
-                },
-                supportingContent = {
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        maxItemsInEachRow = 3,
-                        maxLines = 1,
-                    ) {
-                        movie.tags.fastForEach {
-                            SuggestionChip(
-                                shape = RoundedCornerShape(4.dp),
-                                onClick = {},
-                                label = {
-                                    Text(
-                                        text = it,
-                                        style = MaterialTheme.typography.labelSmall,
-                                        maxLines = 1,
+    AnimatedContent(targetState = state.movies.isEmpty()) { isListEmpty ->
+        if (isListEmpty) {
+            EmptyListPlaceHolder(
+                modifier = Modifier,
+                icon = Icons.Outlined.Info,
+                title = stringResource(R.string.empty_bookmark_list_title),
+                subtitle = stringResource(R.string.empty_bookmark_list_subtitle),
+            )
+        } else {
+            LazyColumn(modifier = modifier.fillMaxSize()) {
+                items(state.movies, key = { it.id }) { movie ->
+                    ListItem(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .animateItem()
+                            .clickable {
+                                onMovieClick(movie.id)
+                            },
+                        headlineContent = {
+                            Text(text = movie.userNameUploader)
+                        },
+                        supportingContent = {
+                            FlowRow(
+                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                maxItemsInEachRow = 3,
+                                maxLines = 1,
+                            ) {
+                                movie.tags.fastForEach {
+                                    SuggestionChip(
+                                        shape = RoundedCornerShape(4.dp),
+                                        onClick = {},
+                                        label = {
+                                            Text(
+                                                text = it,
+                                                style = MaterialTheme.typography.labelSmall,
+                                                maxLines = 1,
+                                            )
+                                        }
                                     )
                                 }
-                            )
-                        }
-                    }
-                },
-                leadingContent = {
-                    Image(
-                        modifier = Modifier
-                            .size(56.dp)
-                            .clip(RoundedCornerShape(10)),
-                        contentScale = ContentScale.Crop,
-                        painter = rememberAsyncImagePainter(
-                            model = movie.videoThumbnail,
-                            placeholder = painterResource(R.drawable.local_movies),
-                            error = painterResource(R.drawable.local_movies),
-                            fallback = painterResource(R.drawable.local_movies),
-                        ),
-                        contentDescription = movie.tags.firstOrNull(),
-                    )
-                },
-                trailingContent = {
-                    IconButton(
-                        onClick = {
-                            onRemoveBookmark(movie.id)
+                            }
                         },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Clear,
-                            contentDescription = stringResource(R.string.remove_from_bookmark),
-                        )
-                    }
-                },
-            )
-            HorizontalDivider()
+                        leadingContent = {
+                            val placeholder = painterResource(ir.rezazarchi.metamovie.R.drawable.local_movies)
+                            Image(
+                                modifier = Modifier
+                                    .size(56.dp)
+                                    .clip(RoundedCornerShape(10)),
+                                contentScale = ContentScale.Crop,
+                                painter = rememberAsyncImagePainter(
+                                    model = movie.videoThumbnail,
+                                    placeholder = placeholder,
+                                    error = placeholder,
+                                    fallback = placeholder,
+                                ),
+                                contentDescription = movie.tags.firstOrNull(),
+                            )
+                        },
+                        trailingContent = {
+                            IconButton(
+                                onClick = {
+                                    onRemoveBookmark(movie.id)
+                                },
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Clear,
+                                    contentDescription = stringResource(R.string.remove_from_bookmark),
+                                )
+                            }
+                        },
+                    )
+                    HorizontalDivider()
+                }
+            }
         }
     }
 }

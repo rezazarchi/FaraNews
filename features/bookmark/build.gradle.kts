@@ -41,6 +41,7 @@ android {
 dependencies {
 
     implementation(project(":core"))
+    implementation(project(":commonui"))
     implementation(project(":bookmark"))
 
     implementation(libs.androidx.core.ktx)
