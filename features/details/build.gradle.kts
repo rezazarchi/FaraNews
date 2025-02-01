@@ -56,4 +56,11 @@ dependencies {
     implementation(libs.bundles.koin)
     implementation(libs.retrofit)
     implementation(libs.kotlin.serialization.json)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.mockk)
+    testImplementation(libs.slf4j.simple)
+    testImplementation(libs.assertk)
+    testImplementation(libs.turbine)
 }
