@@ -9,6 +9,7 @@ espressoCore = "3.6.1"
 assertk = "0.28.1"
 mockk = "1.13.5"
 slf4jSimple = "2.0.9"
+turbine = "1.2.0"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
 composeBom = "2024.04.01"
@@ -40,6 +41,7 @@ assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assert
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4jSimple" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }

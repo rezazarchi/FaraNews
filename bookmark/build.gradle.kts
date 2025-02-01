@@ -41,4 +41,11 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.bundles.koin)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.mockk)
+    testImplementation(libs.slf4j.simple)
+    testImplementation(libs.assertk)
+    testImplementation(libs.turbine)
 }
