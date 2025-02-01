@@ -3,6 +3,7 @@ package ir.rezazarchi.metamovie.features.details.presentation.ui
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -81,7 +82,9 @@ fun MovieDetailsScreen(
     AnimatedContent(targetState = state.isLoading) { isLoading ->
         if (isLoading) {
             Box(
-                modifier = modifier.fillMaxSize(),
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
@@ -90,6 +93,7 @@ fun MovieDetailsScreen(
             Column(
                 modifier = modifier
                     .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
