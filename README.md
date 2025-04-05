@@ -1,6 +1,6 @@
-# MetaMovie
+# Fara News
 
-MetaMovie is an Android application developed as part of a job interview task. The app allows users to explore and search movie collections.
+Fara News is an Android application developed as part of a job interview task. The app allows users to explore and search movie collections.
 
 ## Features
 
@@ -13,8 +13,8 @@ MetaMovie is an Android application developed as part of a job interview task. T
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/rezazarchi/MetaMovie.git
-   cd MetaMovie
+   git clone https://github.com/rezazarchi/FaraNews.git
+   cd FaraNews
    git checkout master
    ```
 

@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Meta Movie"
+rootProject.name = "Fara News"
 include(":app")
 include(":core")
 include(":commonui")
