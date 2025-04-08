@@ -1,21 +1,18 @@
 package ir.rezazarchi.metamovie.features.details.data.mapper
 
-import ir.rezazarchi.metamovie.database.entity.MovieEntity
-import ir.rezazarchi.metamovie.features.details.domain.model.MovieDetails
-import ir.rezazarchi.metamovie.features.details.domain.model.MovieStatistics
+import ir.rezazarchi.metamovie.database.entity.NewsEntity
+import ir.rezazarchi.metamovie.features.details.domain.model.NewsDetails
 
 object MovieDetailsMapper {
-    fun MovieEntity.toMovieDetails(): MovieDetails {
-        return MovieDetails(
-            id = id,
-            videoUrl = videoUrl,
-            userNameUploader = username,
-            tags = tags,
-            movieStatistics = MovieStatistics(
-                videoStats.views,
-                videoStats.likes,
-                videoStats.comments,
-            )
+    fun NewsEntity.toMovieDetails(): NewsDetails {
+        return NewsDetails(
+            id = this.id,
+            title = this.title,
+            fullContent = this.content ?: "",
+            imageUrl = this.urlToImage ?: "",
+            date = this.publishedAt,
+            author = this.author ?: "",
+            source = this.source ?: "",
         )
     }
 }

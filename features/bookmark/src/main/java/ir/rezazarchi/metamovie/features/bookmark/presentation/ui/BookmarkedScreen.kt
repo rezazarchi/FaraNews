@@ -88,7 +88,7 @@ fun BookmarkedScreen(
                                 onMovieClick(movie.id)
                             },
                         headlineContent = {
-                            Text(text = movie.userNameUploader)
+                            Text(text = movie.title)
                         },
                         supportingContent = {
                             FlowRow(
@@ -96,19 +96,7 @@ fun BookmarkedScreen(
                                 maxItemsInEachRow = 3,
                                 maxLines = 1,
                             ) {
-                                movie.tags.fastForEach {
-                                    SuggestionChip(
-                                        shape = RoundedCornerShape(4.dp),
-                                        onClick = {},
-                                        label = {
-                                            Text(
-                                                text = it,
-                                                style = MaterialTheme.typography.labelSmall,
-                                                maxLines = 1,
-                                            )
-                                        }
-                                    )
-                                }
+                                Text(text = movie.fullContent)
                             }
                         },
                         leadingContent = {
@@ -119,12 +107,12 @@ fun BookmarkedScreen(
                                     .clip(RoundedCornerShape(10)),
                                 contentScale = ContentScale.Crop,
                                 painter = rememberAsyncImagePainter(
-                                    model = movie.videoThumbnail,
+                                    model = movie.imageUrl,
                                     placeholder = placeholder,
                                     error = placeholder,
                                     fallback = placeholder,
                                 ),
-                                contentDescription = movie.tags.firstOrNull(),
+                                contentDescription = movie.title,
                             )
                         },
                         trailingContent = {

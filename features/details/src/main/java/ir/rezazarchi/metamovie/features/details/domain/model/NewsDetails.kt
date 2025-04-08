@@ -1,8 +1,8 @@
-package ir.rezazarchi.metamovie.bookmark.domain.model
+package ir.rezazarchi.metamovie.features.details.domain.model
 
 import java.time.Instant
 
-data class BookmarkedMovieDetailed(
+data class NewsDetails(
     val id: Long,
     val title: String,
     val fullContent: String,
@@ -10,5 +10,4 @@ data class BookmarkedMovieDetailed(
     val date: Instant,
     val author: String,
     val source: String,
-    val bookmarked: Boolean,
 )

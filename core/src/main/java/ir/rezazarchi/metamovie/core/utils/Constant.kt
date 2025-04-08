@@ -1,6 +1,9 @@
 package ir.rezazarchi.metamovie.core.utils
 
+import kotlinx.collections.immutable.persistentSetOf
+
 object Constant {
-    const val API_BASE_URL_VALUE = "https://pixabay.com/api/videos/"
-    const val API_KEY = "48457195-fe474dc3ded22a60c1e973d21"
+    const val API_BASE_URL_VALUE = "https://newsapi.org/v2/"
+    const val API_KEY = "89a3de9743a54ec490f290a0828b3b3b"
+    val SEARCH_QUERIES = persistentSetOf("Microsoft", "Apple", "Google", "Tesla")
 }

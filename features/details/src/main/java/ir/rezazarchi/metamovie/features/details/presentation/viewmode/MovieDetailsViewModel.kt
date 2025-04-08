@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import ir.rezazarchi.metamovie.core.data.Result
 import ir.rezazarchi.metamovie.core.data.onError
 import ir.rezazarchi.metamovie.core.data.onSuccess
-import ir.rezazarchi.metamovie.bookmark.domain.usecase.IsBookmarkedUseCase
-import ir.rezazarchi.metamovie.bookmark.domain.usecase.ToggleBookmarkUseCase
 import ir.rezazarchi.metamovie.features.details.domain.usecase.MovieDetailsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -42,7 +40,7 @@ class MovieDetailsViewModel(
                 .onSuccess { result ->
                     _state.update {
                         it.copy(
-                            movieDetails = result,
+                            newsDetails = result,
                             isBookmarked = isBookmarked is Result.Success && isBookmarked.data,
                             isLoading = false,
                             error = null,
@@ -52,7 +50,7 @@ class MovieDetailsViewModel(
                 .onError {
                     _state.update {
                         it.copy(
-                            movieDetails = null,
+                            newsDetails = null,
                             isBookmarked = false,
                             isLoading = false,
                             error = it.error,

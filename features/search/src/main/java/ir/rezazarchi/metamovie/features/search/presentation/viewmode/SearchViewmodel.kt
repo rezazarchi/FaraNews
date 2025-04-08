@@ -8,7 +8,7 @@ import ir.rezazarchi.metamovie.core.data.onSuccess
 import ir.rezazarchi.metamovie.core.utils.toUiText
 import ir.rezazarchi.metamovie.bookmark.domain.usecase.BookmarkedMoviesUseCase
 import ir.rezazarchi.metamovie.bookmark.domain.usecase.ToggleBookmarkUseCase
-import ir.rezazarchi.metamovie.features.search.domain.model.SearchedMovie
+import ir.rezazarchi.metamovie.features.search.domain.model.SearchedNews
 import ir.rezazarchi.metamovie.features.search.domain.usecase.SearchMoviesUseCase
 import ir.rezazarchi.metamovie.features.search.presentation.viewmode.SearchMoviesEffects.ShowSnackBar
 import kotlinx.coroutines.Job
@@ -33,7 +33,7 @@ class SearchViewmodel(
     private val toggleBookmarkUseCase: ToggleBookmarkUseCase,
 ) : ViewModel() {
 
-    private val searchResultFlow = MutableStateFlow<List<SearchedMovie>>(emptyList())
+    private val searchResultFlow = MutableStateFlow<List<SearchedNews>>(emptyList())
     private val bookmarkedMoviesFlow = MutableStateFlow<Set<Long>>(emptySet())
 
     private var searchJob: Job? = null

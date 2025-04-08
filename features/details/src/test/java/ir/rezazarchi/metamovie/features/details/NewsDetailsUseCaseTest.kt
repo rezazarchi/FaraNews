@@ -7,11 +7,11 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import io.mockk.mockk
 import ir.rezazarchi.metamovie.core.data.Result
-import ir.rezazarchi.metamovie.database.dao.MoviesDao
-import ir.rezazarchi.metamovie.database.entity.MovieEntity
+import ir.rezazarchi.metamovie.database.dao.NewsDao
+import ir.rezazarchi.metamovie.database.entity.NewsEntity
 import ir.rezazarchi.metamovie.database.entity.VideoStats
-import ir.rezazarchi.metamovie.database.fake.FakeMoviesDao
-import ir.rezazarchi.metamovie.database.fake.FakeMoviesList
+import ir.rezazarchi.metamovie.database.fake.FakeNewsDao
+import ir.rezazarchi.metamovie.database.fake.FakeNewsList
 import ir.rezazarchi.metamovie.features.details.data.mapper.MovieDetailsMapper.toMovieDetails
 import ir.rezazarchi.metamovie.features.details.data.remote.service.MovieDetailsApiService
 import ir.rezazarchi.metamovie.features.details.data.repository.MovieDetailsRepositoryImplementation
@@ -21,17 +21,17 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class MovieDetailsUseCaseTest {
+class NewsDetailsUseCaseTest {
 
     private lateinit var movieDetailsUseCase: MovieDetailsUseCase
     private lateinit var movieDetailsRepository: MovieDetailsRepository
     private lateinit var movieOnlineApi: MovieDetailsApiService
-    private lateinit var movieLocalDatabase: MoviesDao
+    private lateinit var movieLocalDatabase: NewsDao
 
     @Before
     fun setUp() = runBlocking {
-        movieLocalDatabase = FakeMoviesDao()
-        movieLocalDatabase.upsertMovies(*FakeMoviesList.moviesList.toTypedArray())
+        movieLocalDatabase = FakeNewsDao()
+        movieLocalDatabase.upsertMovies(*FakeNewsList.newsList.toTypedArray())
         movieOnlineApi = mockk(relaxed = true)
         movieDetailsRepository =
             MovieDetailsRepositoryImplementation(movieOnlineApi, movieLocalDatabase)
@@ -46,7 +46,7 @@ class MovieDetailsUseCaseTest {
             println("assert that first emission is success with the movie which have saved in database cache before")
             assert(firstEmit is Result.Success)
             assertThat((firstEmit as Result.Success).data).isEqualTo(
-                MovieEntity(
+                NewsEntity(
                     id = 1,
                     tags = listOf("tag1", "tag2"),
                     thumbnailUrl = "",

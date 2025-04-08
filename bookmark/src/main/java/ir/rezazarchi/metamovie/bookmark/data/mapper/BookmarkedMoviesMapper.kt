@@ -1,15 +1,18 @@
 package ir.rezazarchi.metamovie.bookmark.data.mapper
 
-import ir.rezazarchi.metamovie.database.entity.MovieEntity
+import ir.rezazarchi.metamovie.database.entity.NewsEntity
 import ir.rezazarchi.metamovie.bookmark.domain.model.BookmarkedMovieDetailed
 
 object BookmarkedMoviesMapper {
-    fun MovieEntity.toBookmarkedMovieDetailed(): BookmarkedMovieDetailed {
+    fun NewsEntity.toBookmarkedMovieDetailed(): BookmarkedMovieDetailed {
         return BookmarkedMovieDetailed(
             id = this.id,
-            videoThumbnail = thumbnailUrl,
-            userNameUploader = username,
-            tags = this.tags,
+            title = this.title,
+            fullContent = this.content ?: "",
+            imageUrl = this.urlToImage ?: "",
+            date = this.publishedAt,
+            author = this.author ?: "",
+            source = this.source ?: "",
             bookmarked = true
         )
     }

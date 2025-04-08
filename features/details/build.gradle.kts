@@ -11,7 +11,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -52,7 +52,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.bundles.media)
+    implementation(libs.bundles.coil)
     implementation(libs.bundles.koin)
     implementation(libs.retrofit)
     implementation(libs.kotlin.serialization.json)

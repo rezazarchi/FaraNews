@@ -1,49 +1,38 @@
 package ir.rezazarchi.metamovie.features.search.data.remote.mapper
 
-import ir.rezazarchi.metamovie.database.entity.MovieEntity
-import ir.rezazarchi.metamovie.database.entity.VideoStats
-import ir.rezazarchi.metamovie.features.search.data.remote.dto.SearchMovieDto
-import ir.rezazarchi.metamovie.features.search.domain.model.SearchedMovie
+import ir.rezazarchi.metamovie.database.entity.NewsEntity
+import ir.rezazarchi.metamovie.features.search.data.remote.dto.NewsResponseDto
+import ir.rezazarchi.metamovie.features.search.domain.model.SearchedNews
+import java.time.Instant
 
 object SearchedMoviesMapper {
 
-    fun SearchMovieDto.toSearchedMovies(): List<SearchedMovie> {
-        return this.hits?.map {
-            SearchedMovie(
-                id = it.id,
-                videoThumbnail = it.videos?.tiny?.thumbnail ?: "",
-                userNameUploader = it.user ?: "",
-                tags = toTagsList(it.tags),
+    fun NewsResponseDto.toNewsEntity(query: String): List<NewsEntity> {
+        return this.articles.map {
+            NewsEntity(
+                id = 0,
+                source = it.source?.name,
+                author = it.author,
+                title = it.title,
+                description = it.description,
+                url = it.url,
+                urlToImage = it.urlToImage,
+                publishedAt = Instant.parse(it.publishedAt),
+                content = it.content,
+                query = query
             )
-        } ?: emptyList()
+        }
     }
 
-    fun SearchMovieDto.toMovieEntity(): List<MovieEntity> {
-        return this.hits?.map {
-            MovieEntity(
-                id = it.id,
-                thumbnailUrl = it.videos?.tiny?.thumbnail ?: "",
-                username = it.user ?: "",
-                tags = toTagsList(it.tags),
-                videoUrl = it.videos?.tiny?.url ?: "",
-                videoStats = VideoStats(
-                    it.views ?: 0,
-                    it.likes ?: 0,
-                    it.comments ?: 0,
-                ),
-            )
-        } ?: emptyList()
-    }
-
-    fun MovieEntity.toSearchedMovie(): SearchedMovie {
-        return SearchedMovie(
+    fun NewsEntity.toSearchedNews(): SearchedNews {
+        return SearchedNews(
             id = this.id,
-            videoThumbnail = this.thumbnailUrl,
-            userNameUploader = this.username,
-            tags = this.tags,
+            title = this.title,
+            imageUrl = this.urlToImage,
+            shortBrief = this.description,
+            queryName = this.query,
+            date = this.publishedAt,
         )
     }
-
-    private fun toTagsList(it: String?) = it?.split(",")?.map { it.trim() } ?: emptyList()
 
 }

@@ -3,44 +3,44 @@ package ir.rezazarchi.metamovie.features.details.presentation.ui
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.fastForEach
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.rememberAsyncImagePainter
 import ir.rezazarchi.metamovie.R
 import ir.rezazarchi.metamovie.features.details.presentation.viewmode.MovieDetailsEvents.GetMovieDetails
 import ir.rezazarchi.metamovie.features.details.presentation.viewmode.MovieDetailsEvents.ToggleBookmark
@@ -110,7 +110,7 @@ fun MovieDetailsScreen(
                         )
                     }
                     IconButton(onClick = {
-                        onToggleBookmark(state.movieDetails!!.id, state.isBookmarked)
+                        onToggleBookmark(state.newsDetails!!.id, state.isBookmarked)
                     }) {
                         val scale by animateFloatAsState(
                             targetValue = if (state.isBookmarked) 1.2f else 1f,
@@ -132,61 +132,28 @@ fun MovieDetailsScreen(
                     }
                 }
 
-                state.movieDetails?.videoUrl?.let {
-                    VideoPlayer(
-                        url = it,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                            .aspectRatio(16f / 9f)
-                    )
-                }
+                val placeholder = painterResource(R.drawable.local_movies)
+                Image(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(10)),
+                    contentScale = ContentScale.Crop,
+                    painter = rememberAsyncImagePainter(
+                        model = state.newsDetails?.imageUrl,
+                        placeholder = placeholder,
+                        error = placeholder,
+                        fallback = placeholder,
+                    ),
+                    contentDescription = state.newsDetails?.title,
+                )
 
                 Text(
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                    text = "Uploaded by: ${state.movieDetails?.userNameUploader}",
+                    text = "${state.newsDetails?.title}",
                     style = MaterialTheme.typography.titleLarge,
                 )
 
-                FlowRow(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp, horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    state.movieDetails?.tags?.fastForEach {
-                        SuggestionChip(
-                            onClick = {},
-                            label = {
-                                Text(
-                                    text = it,
-                                    fontSize = 12.sp,
-                                )
-                            })
-                    }
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp, horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    StatisticItem(
-                        icon = Icons.Default.Face,
-                        count = state.movieDetails?.movieStatistics?.numberOfViews,
-                        label = stringResource(R.string.views_count),
-                    )
-                    StatisticItem(
-                        icon = Icons.Default.Favorite,
-                        count = state.movieDetails?.movieStatistics?.numberOfLikes,
-                        label = stringResource(R.string.likes_count),
-                    )
-                    StatisticItem(
-                        icon = Icons.Default.MailOutline,
-                        count = state.movieDetails?.movieStatistics?.numberOfComments,
-                        label = stringResource(R.string.comments_count),
-                    )
-                }
+                state.newsDetails?.fullContent?.let { Text(text = it) }
             }
         }
     }

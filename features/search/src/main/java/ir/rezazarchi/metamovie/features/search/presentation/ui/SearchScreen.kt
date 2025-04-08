@@ -133,8 +133,8 @@ fun SearchScreen(
                     )
                 } else {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(state.movies, key = { it.searchedMovie.id }) { movie ->
-                            val searchedMovie = movie.searchedMovie
+                        items(state.movies, key = { it.searchedNews.id }) { movie ->
+                            val searchedMovie = movie.searchedNews
                             ListItem(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -143,7 +143,7 @@ fun SearchScreen(
                                         onMovieClick(searchedMovie.id)
                                     },
                                 headlineContent = {
-                                    Text(text = searchedMovie.userNameUploader)
+                                    searchedMovie.title?.let { Text(text = it) }
                                 },
                                 supportingContent = {
                                     FlowRow(
@@ -151,20 +151,7 @@ fun SearchScreen(
                                         maxItemsInEachRow = 3,
                                         maxLines = 1,
                                     ) {
-                                        searchedMovie.tags.fastForEach {
-                                            SuggestionChip(
-                                                shape = RoundedCornerShape(4.dp),
-                                                onClick = {
-                                                    onTagClicked(it)
-                                                },
-                                                label = {
-                                                    Text(
-                                                        text = it,
-                                                        style = MaterialTheme.typography.labelSmall,
-                                                        maxLines = 1,
-                                                    )
-                                                })
-                                        }
+                                        searchedMovie.shortBrief?.let { Text(it) }
                                     }
                                 },
                                 leadingContent = {
@@ -175,12 +162,12 @@ fun SearchScreen(
                                             .clip(RoundedCornerShape(10)),
                                         contentScale = ContentScale.Crop,
                                         painter = rememberAsyncImagePainter(
-                                            model = searchedMovie.videoThumbnail,
+                                            model = searchedMovie.imageUrl,
                                             placeholder = painterResource(R.drawable.local_movies),
                                             error = painterResource(R.drawable.local_movies),
                                             fallback = painterResource(R.drawable.local_movies),
                                         ),
-                                        contentDescription = searchedMovie.tags.firstOrNull(),
+                                        contentDescription = searchedMovie.title,
                                     )
                                 },
                                 trailingContent = {

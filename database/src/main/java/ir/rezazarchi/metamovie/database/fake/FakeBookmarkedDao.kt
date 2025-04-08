@@ -2,7 +2,7 @@ package ir.rezazarchi.metamovie.database.fake
 
 import ir.rezazarchi.metamovie.database.dao.BookmarkedDao
 import ir.rezazarchi.metamovie.database.entity.BookmarkedMovieEntity
-import ir.rezazarchi.metamovie.database.entity.MovieEntity
+import ir.rezazarchi.metamovie.database.entity.NewsEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -38,7 +38,7 @@ class FakeBookmarkedDao : BookmarkedDao {
         bookmarkedFlow.value = bookmarkedList.toList()
     }
 
-    override fun getAllBookmarkedMoviesDetailed(): Flow<List<MovieEntity>> {
+    override fun getAllBookmarkedMoviesDetailed(): Flow<List<NewsEntity>> {
         return flowOf(emptyList()) // This requires a reference to the movies list to work properly
     }
 }

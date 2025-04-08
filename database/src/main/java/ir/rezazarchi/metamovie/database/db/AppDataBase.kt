@@ -3,27 +3,25 @@ package ir.rezazarchi.metamovie.database.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import ir.rezazarchi.metamovie.database.converter.TagListConverter
-import ir.rezazarchi.metamovie.database.converter.VideoStatsConverter
+import ir.rezazarchi.metamovie.database.converter.DateTypeConverter
 import ir.rezazarchi.metamovie.database.dao.BookmarkedDao
-import ir.rezazarchi.metamovie.database.dao.MoviesDao
+import ir.rezazarchi.metamovie.database.dao.NewsDao
 import ir.rezazarchi.metamovie.database.entity.BookmarkedMovieEntity
-import ir.rezazarchi.metamovie.database.entity.MovieEntity
+import ir.rezazarchi.metamovie.database.entity.NewsEntity
 
 @Database(
     entities = [
-        MovieEntity::class,
+        NewsEntity::class,
         BookmarkedMovieEntity::class,
     ],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(
-    TagListConverter::class,
-    VideoStatsConverter::class,
+    DateTypeConverter::class,
 )
 abstract class AppDataBase : RoomDatabase() {
-    abstract fun movieDao(): MoviesDao
+    abstract fun newsDao(): NewsDao
     abstract fun bookmarkedDao(): BookmarkedDao
 
 }

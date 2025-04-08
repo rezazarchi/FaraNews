@@ -7,11 +7,9 @@ import androidx.annotation.Keep
 
 @Keep
 @Serializable
-data class SearchMovieDto(
-    @SerialName("total")
-    val total: Int?, // 1455
-    @SerialName("totalHits")
-    val totalHits: Int?, // 500
-    @SerialName("hits")
-    val hits: List<Hit>?
+data class SourceDto(
+    @SerialName("id")
+    val id: String? = null,
+    @SerialName("name")
+    val name: String = "",
 )

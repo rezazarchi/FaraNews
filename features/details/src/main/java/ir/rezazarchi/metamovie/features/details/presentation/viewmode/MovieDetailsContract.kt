@@ -1,10 +1,10 @@
 package ir.rezazarchi.metamovie.features.details.presentation.viewmode
 
 import ir.rezazarchi.metamovie.core.utils.UiText
-import ir.rezazarchi.metamovie.features.details.domain.model.MovieDetails
+import ir.rezazarchi.metamovie.features.details.domain.model.NewsDetails
 
 data class MovieDetailsState(
-    val movieDetails: MovieDetails? = null,
+    val newsDetails: NewsDetails? = null,
     val isBookmarked: Boolean = false,
     val isLoading: Boolean = true,
     val error: UiText? = null,

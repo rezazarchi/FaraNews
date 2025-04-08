@@ -8,5 +8,5 @@ import org.koin.dsl.module
 val databaseModule = module {
     single<AppDataBase> { DatabaseFactory.getDatabase(androidApplication()) }
     single { get<AppDataBase>().bookmarkedDao() }
-    single { get<AppDataBase>().movieDao() }
+    single { get<AppDataBase>().newsDao() }
 }
