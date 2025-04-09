@@ -13,23 +13,23 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MovieDetailsViewModel(
+class NewsDetailsViewModel(
     val movieDetails: MovieDetailsUseCase,
     val isBookmarked: ir.rezazarchi.metamovie.bookmark.domain.usecase.IsBookmarkedUseCase,
     val toggleBookmarkUseCase: ir.rezazarchi.metamovie.bookmark.domain.usecase.ToggleBookmarkUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(MovieDetailsState())
+    private val _state = MutableStateFlow(NewsDetailsState())
     val state = _state.asStateFlow()
 
-    fun onEvent(event: MovieDetailsEvents) {
+    fun onEvent(event: NewsDetailsEvents) {
         when (event) {
-            is MovieDetailsEvents.GetMovieDetails -> {
-                getMovieDetailsWithBookmarkStatus(event.movieId)
+            is NewsDetailsEvents.GetNewsDetails -> {
+                getMovieDetailsWithBookmarkStatus(event.newsId)
             }
 
-            is MovieDetailsEvents.ToggleBookmark -> {
-                toggleBookmark(event.movieId, event.bookmarked)
+            is NewsDetailsEvents.ToggleBookmark -> {
+                toggleBookmark(event.newsId, event.bookmarked)
             }
         }
     }

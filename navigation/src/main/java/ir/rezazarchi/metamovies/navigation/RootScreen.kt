@@ -15,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import ir.rezazarchi.metamovie.features.details.presentation.ui.MovieDetailsScreenRoot
+import ir.rezazarchi.metamovie.features.details.presentation.ui.NewsDetailsScreenRoot
 import kotlinx.coroutines.launch
 
 @Composable
@@ -54,9 +54,9 @@ fun RootScreen(modifier: Modifier = Modifier) {
             }
             composable<NavigationRoute.MovieDetails> {
                 val movieId = it.toRoute<NavigationRoute.MovieDetails>().id
-                MovieDetailsScreenRoot(
+                NewsDetailsScreenRoot(
                     modifier = Modifier.padding(paddingValues),
-                    movieId = movieId,
+                    newsID = movieId,
                     onBackClicked = {
                         navController.navigateUp()
                     },

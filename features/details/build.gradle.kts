@@ -41,6 +41,7 @@ android {
 dependencies {
 
     implementation(project(":core"))
+    implementation(project(":commonui"))
     implementation(project(":database"))
     implementation(project(":bookmark"))
 

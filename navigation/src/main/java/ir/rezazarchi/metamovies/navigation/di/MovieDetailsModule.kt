@@ -5,7 +5,7 @@ import ir.rezazarchi.metamovie.features.details.data.remote.service.MovieDetails
 import ir.rezazarchi.metamovie.features.details.data.repository.MovieDetailsRepositoryImplementation
 import ir.rezazarchi.metamovie.features.details.domain.repo.MovieDetailsRepository
 import ir.rezazarchi.metamovie.features.details.domain.usecase.MovieDetailsUseCase
-import ir.rezazarchi.metamovie.features.details.presentation.viewmode.MovieDetailsViewModel
+import ir.rezazarchi.metamovie.features.details.presentation.viewmode.NewsDetailsViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -20,5 +20,5 @@ val movieDetailsModule = module {
     }
     singleOf(::MovieDetailsRepositoryImplementation) bind MovieDetailsRepository::class
     factoryOf(::MovieDetailsUseCase)
-    viewModelOf(::MovieDetailsViewModel)
+    viewModelOf(::NewsDetailsViewModel)
 }
