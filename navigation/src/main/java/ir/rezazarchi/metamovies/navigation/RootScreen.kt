@@ -47,7 +47,7 @@ fun RootScreen(modifier: Modifier = Modifier) {
                             snackbarHostState.showSnackbar(it.asString(context))
                         }
                     },
-                    onMovieClick = {
+                    onItemClicked = {
                         navController.navigate(NavigationRoute.MovieDetails(it))
                     },
                 )

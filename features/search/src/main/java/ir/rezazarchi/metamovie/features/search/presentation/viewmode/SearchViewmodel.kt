@@ -43,7 +43,7 @@ class SearchViewmodel(
 
     private val _state = MutableStateFlow(SearchMoviesState())
     val state = _state.onStart {
-        observeForQuerySearch()
+        searchMovies()
         observeBookmarkedList()
         loadMoviesWithBookmarks()
     }.stateIn(
@@ -65,40 +65,14 @@ class SearchViewmodel(
         }.launchIn(viewModelScope)
     }
 
-    private fun observeForQuerySearch() {
-        _state
-            .map { it.query }
-            .distinctUntilChanged()
-            .debounce(500L)
-            .onEach { query ->
-                when {
-                    query.isBlank() -> {
-                        _state.update {
-                            it.copy(
-                                error = null,
-                                movies = emptyList(),
-                                isLoading = false,
-                            )
-                        }
-                    }
-
-                    query.length >= 2 -> {
-                        searchJob?.cancel()
-                        searchJob = searchMovies(query)
-                    }
-                }
-            }
-            .launchIn(viewModelScope)
-    }
-
-    private fun searchMovies(query: String) = viewModelScope.launch {
+    private fun searchMovies() = viewModelScope.launch {
         _state.update {
             it.copy(
                 isLoading = true,
                 error = null,
             )
         }
-        searchMoviesUseCase(query).onEach {
+        searchMoviesUseCase().onEach {
             it.onSuccess { searchedMovies ->
                 _state.update {
                     it.copy(
@@ -153,12 +127,12 @@ class SearchViewmodel(
 
             is SearchMoviesEvents.OnSearchQueryChange -> {
                 _state.update {
-                    it.copy(query = event.query)
+                    it.copy()
                 }
             }
 
             is SearchMoviesEvents.SearchForMovies -> {
-                searchMovies(event.query)
+                searchMovies()
             }
         }
     }

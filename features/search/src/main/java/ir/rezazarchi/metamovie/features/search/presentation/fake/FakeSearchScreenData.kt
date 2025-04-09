@@ -42,7 +42,6 @@ object FakeSearchScreenData {
                 bookmarked = true,
             )
         ),
-        query = "",
         isLoading = false,
         error = null,
     )

@@ -22,7 +22,7 @@ import ir.rezazarchi.metamovie.features.search.presentation.ui.SearchScreenRoot
 fun TabbedScreen(
     modifier: Modifier = Modifier,
     showSnackBar: (UiText) -> Unit,
-    onMovieClick: (Long) -> Unit,
+    onItemClicked: (Long) -> Unit,
 ) {
 
     val state = rememberTabbedScreenState()
@@ -80,13 +80,13 @@ fun TabbedScreen(
                 0 -> {
                     SearchScreenRoot(
                         showSnackBar = showSnackBar,
-                        onMovieClick = onMovieClick,
+                        onItemClicked = onItemClicked,
                     )
                 }
 
                 1 -> {
                     BookmarkedScreenRoot(
-                        onMovieClick = onMovieClick,
+                        onMovieClick = onItemClicked,
                     )
                 }
             }

@@ -11,6 +11,7 @@ interface SearchNewsApiService {
         @Query("q") query: String,
         @Query("from") from: String,
         @Query("sortBy") sortBy: String,
+        @Query("pageSize") pageSize: Int = 20,
         @Query("apiKey") apiKey: String,
     ): Response<NewsResponseDto>
 }
