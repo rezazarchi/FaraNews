@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.rezazarchi.metamovie.commonui.components.EmptyListPlaceHolder
+import ir.rezazarchi.metamovie.core.utils.Constant.SEARCH_QUERIES
 import ir.rezazarchi.metamovie.core.utils.ObserveAsEvents
 import ir.rezazarchi.metamovie.core.utils.UiText
 import ir.rezazarchi.metamovie.features.search.presentation.fake.FakeSearchScreenData
@@ -87,7 +88,11 @@ fun SearchScreen(
                     )
                 } else {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(state.movies, key = { it.searchedNews.id }) { movie ->
+                        items(
+                            items = state.movies.sortedBy {
+                                SEARCH_QUERIES.indexOf(it.searchedNews.queryName)
+                            },
+                            key = { it.searchedNews.id }) { movie ->
                             NewsListItem(
                                 newsWithBookmarkState = movie,
                                 onItemClicked = onItemClicked,
