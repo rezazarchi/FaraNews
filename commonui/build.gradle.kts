@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "ir.rezazarchi.metamovie.commonui"
+    namespace = "ir.rezazarchi.faranews.commonui"
     compileSdk = 35
 
     defaultConfig {

@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "ir.rezazarchi.metamovie"
+    namespace = "ir.rezazarchi.faranews"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "ir.rezazarchi.metamovie"
+        applicationId = "ir.rezazarchi.faranews"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

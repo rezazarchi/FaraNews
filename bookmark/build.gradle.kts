@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "ir.rezazarchi.metamovie.bookmark"
+    namespace = "ir.rezazarchi.faranews.bookmark"
     compileSdk = 35
 
     defaultConfig {

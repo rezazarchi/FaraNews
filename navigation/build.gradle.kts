@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "ir.rezazarchi.metamovies.navigation"
+    namespace = "ir.rezazarchi.faranews.navigation"
     compileSdk = 35
 
     defaultConfig {
