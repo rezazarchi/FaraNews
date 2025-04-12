@@ -1,11 +1,13 @@
 # Fara News
 
-Fara News is an Android application developed as part of a job interview task. The app allows users to explore and search movie collections.
+Fara News is an Android application developed as part of a job interview challenge. The app enables users to seamlessly explore the latest news.
+
+Built following clean architecture principles, the project is organized into multiple modules, promoting scalability and maintainability. It leverages Retrofit for efficient API interactions and utilizes Room for caching, ensuring both fast data retrieval and offline access.
 
 ## Features
 
-- **Movie Browsing**: Search movies.
-- **Bookmarking**: Save favorite movies for quick access.
+- **News Browsing**: Fetch data from yesterday until now, sorted by newest first. Queries limited to: (Microsoft, Apple, Google, Tesla.)
+- **Bookmarking**: Save favorite news for quick access.
 - **User-Friendly Interface**: Navigate the app with ease, thanks to its intuitive design implemented with Jetpack Compose and based on Material 3.
 
 ## Installation
@@ -20,7 +22,7 @@ Fara News is an Android application developed as part of a job interview task. T
 
 2. **Open in Android Studio**:
 
-   - Launch Android Studio. You should have the latest version of Android Studio (Ladybug Feature Drop | 2024.2.2)
+   - Launch Android Studio. You should have the latest version of Android Studio (Meerkat)
    - Select 'Open an existing project' and navigate to the cloned repository's directory.
 
 3. **Build the Project**:
