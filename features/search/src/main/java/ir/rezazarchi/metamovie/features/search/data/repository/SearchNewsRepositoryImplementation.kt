@@ -7,6 +7,7 @@ import ir.rezazarchi.metamovie.core.utils.Constant.API_KEY
 import ir.rezazarchi.metamovie.core.utils.Constant.SEARCH_QUERIES
 import ir.rezazarchi.metamovie.core.utils.safeCall
 import ir.rezazarchi.metamovie.database.dao.NewsDao
+import ir.rezazarchi.metamovie.database.entity.NewsEntity
 import ir.rezazarchi.metamovie.features.search.data.remote.mapper.SearchedMoviesMapper.toNewsEntity
 import ir.rezazarchi.metamovie.features.search.data.remote.mapper.SearchedMoviesMapper.toSearchedNews
 import ir.rezazarchi.metamovie.features.search.data.remote.service.SearchNewsApiService
@@ -24,6 +25,9 @@ class SearchNewsRepositoryImplementation(
 ) : SearchNewsRepository {
 
     override fun searchNews() = flow {
+
+        val articlesList = arrayListOf<NewsEntity>()
+
         SEARCH_QUERIES.forEach { query ->
             safeCall {
                 apiService.searchNews(
@@ -33,18 +37,19 @@ class SearchNewsRepositoryImplementation(
                     apiKey = API_KEY,
                 )
             }.onSuccess {
-                dao.insertNews(*it.toNewsEntity(query).toTypedArray())
+                articlesList.addAll(it.toNewsEntity(query))
             }.onError {
                 emit(Result.Error(it))
             }
-            val now = ZonedDateTime.now(ZoneId.systemDefault())
-            emitAll(
-                dao.getYesterdayNews(
-                    now.minusDays(1).toLocalDate().atStartOfDay(now.zone).toInstant(),
-                    now.toLocalDate().atStartOfDay(now.zone).toInstant().minusNanos(1),
-                ).map { movieEntities ->
-                    Result.Success(movieEntities.map { it.toSearchedNews() })
-                })
+            dao.insertNews(*articlesList.toTypedArray())
         }
+        val now = ZonedDateTime.now(ZoneId.systemDefault())
+        emitAll(
+            dao.getYesterdayNews(
+                now.minusDays(1).toLocalDate().atStartOfDay(now.zone).toInstant(),
+                now.toLocalDate().atStartOfDay(now.zone).toInstant().minusNanos(1),
+            ).map { movieEntities ->
+                Result.Success(movieEntities.map { it.toSearchedNews() })
+            })
     }
 }
