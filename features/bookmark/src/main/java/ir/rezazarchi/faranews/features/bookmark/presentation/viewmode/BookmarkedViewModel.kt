@@ -6,7 +6,7 @@ import ir.rezazarchi.faranews.core.data.NetworkError
 import ir.rezazarchi.faranews.core.data.onError
 import ir.rezazarchi.faranews.core.data.onSuccess
 import ir.rezazarchi.faranews.core.utils.toUiText
-import ir.rezazarchi.faranews.bookmark.domain.usecase.BookmarkedMovieDetailedUseCase
+import ir.rezazarchi.faranews.bookmark.domain.usecase.BookmarkedNewsDetailedUseCase
 import ir.rezazarchi.faranews.bookmark.domain.usecase.ToggleBookmarkUseCase
 import ir.rezazarchi.faranews.features.bookmark.presentation.viewmode.BookmarkedContracts.BookmarkedEvents
 import ir.rezazarchi.faranews.features.bookmark.presentation.viewmode.BookmarkedContracts.BookmarkedState
@@ -18,13 +18,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BookmarkedViewModel(
-    private val bookmarkedMovies: BookmarkedMovieDetailedUseCase,
+    private val bookmarkedNews: BookmarkedNewsDetailedUseCase,
     private val removeBookmark: ToggleBookmarkUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(BookmarkedState())
     val state = _state.onStart {
-        fetchAllBookmarkedMoviesDetailed()
+        fetchAllBookmarkedNewsDetailed()
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000L),
@@ -45,11 +45,11 @@ class BookmarkedViewModel(
         }
     }
 
-    private fun fetchAllBookmarkedMoviesDetailed() {
+    private fun fetchAllBookmarkedNewsDetailed() {
         viewModelScope.launch {
-            bookmarkedMovies().collect {
+            bookmarkedNews().collect {
                 it.onSuccess { result ->
-                    _state.update { it.copy(movies = result) }
+                    _state.update { it.copy(news = result) }
                 }.onError { error ->
                     _state.update { it.copy(error = (error as NetworkError).toUiText()) }
                 }

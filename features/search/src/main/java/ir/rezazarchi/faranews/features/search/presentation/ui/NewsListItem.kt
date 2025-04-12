@@ -31,12 +31,12 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import ir.rezazarchi.faranews.R
 import ir.rezazarchi.faranews.commonui.utils.formatDate
-import ir.rezazarchi.faranews.features.search.presentation.viewmode.SearchedMovieWithBookmark
+import ir.rezazarchi.faranews.features.search.presentation.viewmode.SearchedNewsWithBookmark
 
 @Composable
 fun NewsListItem(
     modifier: Modifier = Modifier,
-    newsWithBookmarkState: SearchedMovieWithBookmark,
+    newsWithBookmarkState: SearchedNewsWithBookmark,
     onItemClicked: (Long) -> Unit,
     onToggleBookmark: (Long, Boolean) -> Unit,
 ) {

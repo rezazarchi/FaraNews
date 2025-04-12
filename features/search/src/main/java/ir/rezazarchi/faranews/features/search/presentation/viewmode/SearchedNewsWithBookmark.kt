@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import ir.rezazarchi.faranews.features.search.domain.model.SearchedNews
 
 @Keep
-data class SearchedMovieWithBookmark(
+data class SearchedNewsWithBookmark(
     val searchedNews: SearchedNews,
     val bookmarked: Boolean,
 )

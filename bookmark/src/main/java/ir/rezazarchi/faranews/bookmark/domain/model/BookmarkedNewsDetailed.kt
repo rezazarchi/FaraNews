@@ -2,7 +2,7 @@ package ir.rezazarchi.faranews.bookmark.domain.model
 
 import java.time.Instant
 
-data class BookmarkedMovieDetailed(
+data class BookmarkedNewsDetailed(
     val id: Long,
     val title: String,
     val fullContent: String,

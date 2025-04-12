@@ -1,7 +1,7 @@
 package ir.rezazarchi.faranews.database.fake
 
 import ir.rezazarchi.faranews.database.dao.BookmarkedDao
-import ir.rezazarchi.faranews.database.entity.BookmarkedMovieEntity
+import ir.rezazarchi.faranews.database.entity.BookmarkedNewsEntity
 import ir.rezazarchi.faranews.database.entity.NewsEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,36 +9,36 @@ import kotlinx.coroutines.flow.flowOf
 
 class FakeBookmarkedDao : BookmarkedDao {
 
-    private val bookmarkedList = mutableListOf<BookmarkedMovieEntity>()
-    private val bookmarkedFlow = MutableStateFlow<List<BookmarkedMovieEntity>>(emptyList())
+    private val bookmarkedList = mutableListOf<BookmarkedNewsEntity>()
+    private val bookmarkedFlow = MutableStateFlow<List<BookmarkedNewsEntity>>(emptyList())
 
-    override fun getAllBookmarkedMovies(): Flow<List<BookmarkedMovieEntity>> {
+    override fun getAllBookmarkedNews(): Flow<List<BookmarkedNewsEntity>> {
         return bookmarkedFlow
     }
 
-    override fun isBookmarked(movieId: Long): Flow<Boolean> {
-        return flowOf(bookmarkedList.any { it.movieId == movieId })
+    override fun isBookmarked(newsId: Long): Flow<Boolean> {
+        return flowOf(bookmarkedList.any { it.newsId == newsId })
     }
 
-    override suspend fun upsertBookmarkedMovie(vararg bookmarkedMovie: BookmarkedMovieEntity) {
-        bookmarkedList.removeAll { existing -> bookmarkedMovie.any { it.movieId == existing.movieId } }
-        bookmarkedList.addAll(bookmarkedMovie)
+    override suspend fun upsertBookmarkedNews(vararg bookmarkedNews: BookmarkedNewsEntity) {
+        bookmarkedList.removeAll { existing -> bookmarkedNews.any { it.newsId == existing.newsId } }
+        bookmarkedList.addAll(bookmarkedNews)
         bookmarkedFlow.value = bookmarkedList.toList()
     }
 
-    override suspend fun insertBookmarkedMovie(bookmarkedMovie: BookmarkedMovieEntity) {
-        if (!bookmarkedList.any { it.movieId == bookmarkedMovie.movieId }) {
-            bookmarkedList.add(bookmarkedMovie)
+    override suspend fun insertBookmarkedNews(bookmarkedNews: BookmarkedNewsEntity) {
+        if (!bookmarkedList.any { it.newsId == bookmarkedNews.newsId }) {
+            bookmarkedList.add(bookmarkedNews)
             bookmarkedFlow.value = bookmarkedList.toList()
         }
     }
 
-    override suspend fun deleteBookmarkedMovie(bookmarkedMovie: BookmarkedMovieEntity) {
-        bookmarkedList.remove(bookmarkedMovie)
+    override suspend fun deleteBookmarkedNews(bookmarkedNews: BookmarkedNewsEntity) {
+        bookmarkedList.remove(bookmarkedNews)
         bookmarkedFlow.value = bookmarkedList.toList()
     }
 
-    override fun getAllBookmarkedMoviesDetailed(): Flow<List<NewsEntity>> {
-        return flowOf(emptyList()) // This requires a reference to the movies list to work properly
+    override fun getAllBookmarkedNewsDetailed(): Flow<List<NewsEntity>> {
+        return flowOf(emptyList()) // This requires a reference to the news list to work properly
     }
 }

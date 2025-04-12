@@ -35,11 +35,11 @@ fun RootScreen(modifier: Modifier = Modifier) {
         val navController = rememberNavController()
         NavHost(
             navController = navController,
-            startDestination = NavigationRoute.MovieList,
+            startDestination = NavigationRoute.NewsList,
             enterTransition = { slideInHorizontally() },
             exitTransition = { slideOutHorizontally() },
         ) {
-            composable<NavigationRoute.MovieList> {
+            composable<NavigationRoute.NewsList> {
                 TabbedScreen(
                     modifier = Modifier.padding(paddingValues),
                     showSnackBar = {
@@ -48,15 +48,15 @@ fun RootScreen(modifier: Modifier = Modifier) {
                         }
                     },
                     onItemClicked = {
-                        navController.navigate(NavigationRoute.MovieDetails(it))
+                        navController.navigate(NavigationRoute.NewsDetails(it))
                     },
                 )
             }
-            composable<NavigationRoute.MovieDetails> {
-                val movieId = it.toRoute<NavigationRoute.MovieDetails>().id
+            composable<NavigationRoute.NewsDetails> {
+                val newsId = it.toRoute<NavigationRoute.NewsDetails>().id
                 NewsDetailsScreenRoot(
                     modifier = Modifier.padding(paddingValues),
-                    newsID = movieId,
+                    newsID = newsId,
                     onBackClicked = {
                         navController.navigateUp()
                     },

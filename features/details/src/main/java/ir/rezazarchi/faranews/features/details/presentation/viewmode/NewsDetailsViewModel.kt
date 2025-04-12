@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import ir.rezazarchi.faranews.core.data.Result
 import ir.rezazarchi.faranews.core.data.onError
 import ir.rezazarchi.faranews.core.data.onSuccess
-import ir.rezazarchi.faranews.features.details.domain.usecase.MovieDetailsUseCase
+import ir.rezazarchi.faranews.features.details.domain.usecase.GetNewsDetailsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class NewsDetailsViewModel(
-    val movieDetails: MovieDetailsUseCase,
+    val newsDetails: GetNewsDetailsUseCase,
     val isBookmarked: ir.rezazarchi.faranews.bookmark.domain.usecase.IsBookmarkedUseCase,
     val toggleBookmarkUseCase: ir.rezazarchi.faranews.bookmark.domain.usecase.ToggleBookmarkUseCase,
 ) : ViewModel() {
@@ -25,7 +25,7 @@ class NewsDetailsViewModel(
     fun onEvent(event: NewsDetailsEvents) {
         when (event) {
             is NewsDetailsEvents.GetNewsDetails -> {
-                getMovieDetailsWithBookmarkStatus(event.newsId)
+                getNewsDetailsWithBookmarkStatus(event.newsId)
             }
 
             is NewsDetailsEvents.ToggleBookmark -> {
@@ -34,9 +34,9 @@ class NewsDetailsViewModel(
         }
     }
 
-    private fun getMovieDetailsWithBookmarkStatus(movieId: Long) {
-        combine(movieDetails(movieId), isBookmarked(movieId)) { movieDetails, isBookmarked ->
-            movieDetails
+    private fun getNewsDetailsWithBookmarkStatus(newsId: Long) {
+        combine(newsDetails(newsId), isBookmarked(newsId)) { newsDetails, isBookmarked ->
+            newsDetails
                 .onSuccess { result ->
                     _state.update {
                         it.copy(

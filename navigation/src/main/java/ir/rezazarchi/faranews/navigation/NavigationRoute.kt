@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 sealed interface NavigationRoute {
 
     @Serializable
-    data object MovieList : NavigationRoute
+    data object NewsList : NavigationRoute
 
     @Serializable
-    data class MovieDetails(val id: Long) : NavigationRoute
+    data class NewsDetails(val id: Long) : NavigationRoute
 }

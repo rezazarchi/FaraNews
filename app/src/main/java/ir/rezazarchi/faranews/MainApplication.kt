@@ -5,8 +5,8 @@ import ir.rezazarchi.faranews.core.di.jsonModule
 import ir.rezazarchi.faranews.core.di.retrofitModule
 import ir.rezazarchi.faranews.navigation.di.bookmarkModule
 import ir.rezazarchi.faranews.navigation.di.databaseModule
-import ir.rezazarchi.faranews.navigation.di.movieDetailsModule
-import ir.rezazarchi.faranews.navigation.di.searchMoviesModule
+import ir.rezazarchi.faranews.navigation.di.newsDetailsModule
+import ir.rezazarchi.faranews.navigation.di.searchNewsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.androix.startup.KoinStartup
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -20,8 +20,8 @@ class MainApplication : Application(), KoinStartup {
         modules(
             retrofitModule,
             jsonModule,
-            searchMoviesModule,
-            movieDetailsModule,
+            searchNewsModule,
+            newsDetailsModule,
             databaseModule,
             bookmarkModule,
         )

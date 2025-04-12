@@ -86,7 +86,7 @@ fun TabbedScreen(
 
                 1 -> {
                     BookmarkedScreenRoot(
-                        onMovieClick = onItemClicked,
+                        onNewsClick = onItemClicked,
                     )
                 }
             }

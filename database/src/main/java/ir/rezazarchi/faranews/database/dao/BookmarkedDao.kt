@@ -6,27 +6,27 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
-import ir.rezazarchi.faranews.database.entity.BookmarkedMovieEntity
+import ir.rezazarchi.faranews.database.entity.BookmarkedNewsEntity
 import ir.rezazarchi.faranews.database.entity.NewsEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookmarkedDao {
-    @Query("SELECT * FROM bookmarked_movies")
-    fun getAllBookmarkedMovies(): Flow<List<BookmarkedMovieEntity>>
+    @Query("SELECT * FROM bookmarked_news")
+    fun getAllBookmarkedNews(): Flow<List<BookmarkedNewsEntity>>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM bookmarked_movies WHERE movieId = :movieId)")
-    fun isBookmarked(movieId: Long): Flow<Boolean>
+    @Query("SELECT EXISTS(SELECT 1 FROM bookmarked_news WHERE newsId = :newsId)")
+    fun isBookmarked(newsId: Long): Flow<Boolean>
 
     @Upsert
-    suspend fun upsertBookmarkedMovie(vararg bookmarkedMovie: BookmarkedMovieEntity)
+    suspend fun upsertBookmarkedNews(vararg bookmarkedNews: BookmarkedNewsEntity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertBookmarkedMovie(bookmarkedMovie: BookmarkedMovieEntity)
+    suspend fun insertBookmarkedNews(bookmarkedNews: BookmarkedNewsEntity)
 
     @Delete
-    suspend fun deleteBookmarkedMovie(bookmarkedMovie: BookmarkedMovieEntity)
+    suspend fun deleteBookmarkedNews(bookmarkedNews: BookmarkedNewsEntity)
 
-    @Query("SELECT news.* FROM news INNER JOIN bookmarked_movies ON news.id = bookmarked_movies.movieId")
-    fun getAllBookmarkedMoviesDetailed(): Flow<List<NewsEntity>>
+    @Query("SELECT news.* FROM news INNER JOIN bookmarked_news ON news.id = bookmarked_news.newsId")
+    fun getAllBookmarkedNewsDetailed(): Flow<List<NewsEntity>>
 }

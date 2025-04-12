@@ -12,20 +12,20 @@ import ir.rezazarchi.faranews.database.entity.NewsEntity
 import ir.rezazarchi.faranews.database.entity.VideoStats
 import ir.rezazarchi.faranews.database.fake.FakeNewsDao
 import ir.rezazarchi.faranews.database.fake.FakeNewsList
-import ir.rezazarchi.faranews.features.details.data.mapper.MovieDetailsMapper.toMovieDetails
-import ir.rezazarchi.faranews.features.details.data.remote.service.MovieDetailsApiService
-import ir.rezazarchi.faranews.features.details.data.repository.MovieDetailsRepositoryImplementation
-import ir.rezazarchi.faranews.features.details.domain.repo.MovieDetailsRepository
-import ir.rezazarchi.faranews.features.details.domain.usecase.MovieDetailsUseCase
+import ir.rezazarchi.faranews.features.details.data.mapper.NewsDetailsMapper.toNewsDetails
+import ir.rezazarchi.faranews.features.details.data.remote.service.NewsDetailsApiService
+import ir.rezazarchi.faranews.features.details.data.repository.NewsDetailsRepositoryImplementation
+import ir.rezazarchi.faranews.features.details.domain.repo.NewsDetailsRepository
+import ir.rezazarchi.faranews.features.details.domain.usecase.GetNewsDetailsUseCase
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
 class NewsDetailsUseCaseTest {
 
-    private lateinit var movieDetailsUseCase: MovieDetailsUseCase
-    private lateinit var movieDetailsRepository: MovieDetailsRepository
-    private lateinit var movieOnlineApi: MovieDetailsApiService
+    private lateinit var getNewsDetailsUseCase: GetNewsDetailsUseCase
+    private lateinit var newsDetailsRepository: NewsDetailsRepository
+    private lateinit var movieOnlineApi: NewsDetailsApiService
     private lateinit var movieLocalDatabase: NewsDao
 
     @Before
@@ -33,15 +33,15 @@ class NewsDetailsUseCaseTest {
         movieLocalDatabase = FakeNewsDao()
         movieLocalDatabase.upsertMovies(*FakeNewsList.newsList.toTypedArray())
         movieOnlineApi = mockk(relaxed = true)
-        movieDetailsRepository =
-            MovieDetailsRepositoryImplementation(movieOnlineApi, movieLocalDatabase)
-        movieDetailsUseCase = MovieDetailsUseCase(movieDetailsRepository)
+        newsDetailsRepository =
+            NewsDetailsRepositoryImplementation(movieOnlineApi, movieLocalDatabase)
+        getNewsDetailsUseCase = GetNewsDetailsUseCase(newsDetailsRepository)
 
     }
 
     @Test
     fun `Get movie detail from database which exists`() = runBlocking {
-        movieDetailsUseCase(1).test {
+        getNewsDetailsUseCase(1).test {
             val firstEmit = awaitItem()
             println("assert that first emission is success with the movie which have saved in database cache before")
             assert(firstEmit is Result.Success)
@@ -53,7 +53,7 @@ class NewsDetailsUseCaseTest {
                     videoUrl = "",
                     username = "Reza Z",
                     videoStats = VideoStats(0, 0, 0),
-                ).toMovieDetails()
+                ).toNewsDetails()
             )
             awaitComplete()
         }
@@ -63,7 +63,7 @@ class NewsDetailsUseCaseTest {
     fun `Get movie detail from database which not exists`() {
         println("assert that this request will fail with NoSuchElementException")
         assertFailure {
-            movieDetailsUseCase(98)
+            getNewsDetailsUseCase(98)
         }.isInstanceOf(NoSuchElementException::class)
     }
 

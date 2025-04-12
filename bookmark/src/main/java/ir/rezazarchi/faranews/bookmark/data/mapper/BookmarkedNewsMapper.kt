@@ -1,11 +1,11 @@
 package ir.rezazarchi.faranews.bookmark.data.mapper
 
 import ir.rezazarchi.faranews.database.entity.NewsEntity
-import ir.rezazarchi.faranews.bookmark.domain.model.BookmarkedMovieDetailed
+import ir.rezazarchi.faranews.bookmark.domain.model.BookmarkedNewsDetailed
 
-object BookmarkedMoviesMapper {
-    fun NewsEntity.toBookmarkedMovieDetailed(): BookmarkedMovieDetailed {
-        return BookmarkedMovieDetailed(
+object BookmarkedNewsMapper {
+    fun NewsEntity.toBookmarkedNewsDetailed(): BookmarkedNewsDetailed {
+        return BookmarkedNewsDetailed(
             id = this.id,
             title = this.title,
             fullContent = this.content ?: "",

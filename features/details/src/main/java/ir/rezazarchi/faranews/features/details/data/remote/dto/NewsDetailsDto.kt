@@ -7,7 +7,7 @@ import androidx.annotation.Keep
 
 @Keep
 @Serializable
-data class MovieDetailsDto(
+data class NewsDetailsDto(
     @SerialName("total")
     val total: Int?, // 1
     @SerialName("totalHits")

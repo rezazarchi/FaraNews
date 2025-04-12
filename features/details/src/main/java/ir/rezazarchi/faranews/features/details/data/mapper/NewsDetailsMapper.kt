@@ -3,8 +3,8 @@ package ir.rezazarchi.faranews.features.details.data.mapper
 import ir.rezazarchi.faranews.database.entity.NewsEntity
 import ir.rezazarchi.faranews.features.details.domain.model.NewsDetails
 
-object MovieDetailsMapper {
-    fun NewsEntity.toMovieDetails(): NewsDetails {
+object NewsDetailsMapper {
+    fun NewsEntity.toNewsDetails(): NewsDetails {
         return NewsDetails(
             id = this.id,
             title = this.title,

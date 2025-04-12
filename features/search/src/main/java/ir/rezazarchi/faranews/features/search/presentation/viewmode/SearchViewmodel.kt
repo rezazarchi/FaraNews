@@ -6,11 +6,11 @@ import ir.rezazarchi.faranews.core.data.NetworkError
 import ir.rezazarchi.faranews.core.data.onError
 import ir.rezazarchi.faranews.core.data.onSuccess
 import ir.rezazarchi.faranews.core.utils.toUiText
-import ir.rezazarchi.faranews.bookmark.domain.usecase.BookmarkedMoviesUseCase
+import ir.rezazarchi.faranews.bookmark.domain.usecase.BookmarkedNewsUseCase
 import ir.rezazarchi.faranews.bookmark.domain.usecase.ToggleBookmarkUseCase
 import ir.rezazarchi.faranews.features.search.domain.model.SearchedNews
-import ir.rezazarchi.faranews.features.search.domain.usecase.SearchMoviesUseCase
-import ir.rezazarchi.faranews.features.search.presentation.viewmode.SearchMoviesEffects.ShowSnackBar
+import ir.rezazarchi.faranews.features.search.domain.usecase.SearchNewsUseCase
+import ir.rezazarchi.faranews.features.search.presentation.viewmode.SearchNewsEffects.ShowSnackBar
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,52 +26,52 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SearchViewmodel(
-    private val searchMoviesUseCase: SearchMoviesUseCase,
-    private val bookmarkUseCase: BookmarkedMoviesUseCase,
+    private val searchNewsUseCase: SearchNewsUseCase,
+    private val bookmarkUseCase: BookmarkedNewsUseCase,
     private val toggleBookmarkUseCase: ToggleBookmarkUseCase,
 ) : ViewModel() {
 
     private val searchResultFlow = MutableStateFlow<List<SearchedNews>>(emptyList())
-    private val bookmarkedMoviesFlow = MutableStateFlow<Set<Long>>(emptySet())
+    private val bookmarkedNewsFlow = MutableStateFlow<Set<Long>>(emptySet())
 
     private var searchJob: Job? = null
 
-    private val _uiEvent = Channel<SearchMoviesEffects>()
+    private val _uiEvent = Channel<SearchNewsEffects>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    private val _state = MutableStateFlow(SearchMoviesState())
+    private val _state = MutableStateFlow(SearchNewsState())
     val state = _state.onStart {
-        searchMovies()
+        fetchNews()
         observeBookmarkedList()
-        loadMoviesWithBookmarks()
+        loadNewsWithBookmarks()
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000L),
         _state.value
     )
 
-    private fun loadMoviesWithBookmarks() {
-        combine(searchResultFlow, bookmarkedMoviesFlow) { movies, bookmarkedMovies ->
+    private fun loadNewsWithBookmarks() {
+        combine(searchResultFlow, bookmarkedNewsFlow) { news, bookmarkedNews ->
             _state.update {
                 it.copy(
                     isLoading = false,
-                    movies = movies.map { movie ->
-                        SearchedMovieWithBookmark(movie, bookmarkedMovies.contains(movie.id))
+                    news = news.map { news ->
+                        SearchedNewsWithBookmark(news, bookmarkedNews.contains(news.id))
                     }
                 )
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun searchMovies() = viewModelScope.launch {
+    private fun fetchNews() = viewModelScope.launch {
         _state.update {
             it.copy(
                 isLoading = true,
                 error = null,
             )
         }
-        searchMoviesUseCase().onEach {
-            it.onSuccess { searchedMovies ->
+        searchNewsUseCase().onEach {
+            it.onSuccess { searchedNews ->
                 _state.update {
                     it.copy(
                         error = null,
@@ -79,7 +79,7 @@ class SearchViewmodel(
                     )
                 }
                 searchResultFlow.update {
-                    searchedMovies
+                    searchedNews
                 }
             }.onError { error ->
                 val errorText = (error as NetworkError).toUiText()
@@ -100,7 +100,7 @@ class SearchViewmodel(
             .onEach { favoriteBooks ->
                 favoriteBooks
                     .onSuccess { result ->
-                        bookmarkedMoviesFlow.update {
+                        bookmarkedNewsFlow.update {
                             result
                         }
                     }
@@ -116,21 +116,21 @@ class SearchViewmodel(
             .launchIn(viewModelScope)
     }
 
-    fun onEvent(event: SearchMoviesEvents) {
+    fun onEvent(event: SearchNewsEvents) {
         when (event) {
 
-            is SearchMoviesEvents.ToggleBookmark -> {
+            is SearchNewsEvents.ToggleBookmark -> {
                 toggleBookmark(event.id, event.bookmarked)
             }
 
-            is SearchMoviesEvents.OnSearchQueryChange -> {
+            is SearchNewsEvents.OnSearchQueryChange -> {
                 _state.update {
                     it.copy()
                 }
             }
 
-            is SearchMoviesEvents.SearchForMovies -> {
-                searchMovies()
+            is SearchNewsEvents.SearchForNews -> {
+                fetchNews()
             }
         }
     }

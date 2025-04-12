@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Keep
-@Entity(tableName = "bookmarked_movies")
-data class BookmarkedMovieEntity(
+@Entity(tableName = "bookmarked_news")
+data class BookmarkedNewsEntity(
     @PrimaryKey
-    var movieId: Long = 0
+    var newsId: Long = 0
 )

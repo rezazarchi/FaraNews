@@ -1,13 +1,13 @@
 package ir.rezazarchi.faranews.bookmark.domain.usecase
 
-import ir.rezazarchi.faranews.bookmark.domain.repo.BookmarkedMoviesRepository
+import ir.rezazarchi.faranews.bookmark.domain.repo.BookmarkedNewsRepository
 
-class ToggleBookmarkUseCase(val repository: BookmarkedMoviesRepository) {
+class ToggleBookmarkUseCase(val repository: BookmarkedNewsRepository) {
     suspend operator fun invoke(id: Long, bookmarked: Boolean) {
         if (bookmarked) {
-            repository.addBookmarkMovie(id)
+            repository.addBookmarkNews(id)
         } else {
-            repository.removeBookmarkMovie(id)
+            repository.removeBookmarkNews(id)
         }
     }
 

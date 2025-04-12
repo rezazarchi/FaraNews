@@ -43,7 +43,7 @@ import org.koin.androidx.compose.koinViewModel
 fun BookmarkedScreenRoot(
     modifier: Modifier = Modifier,
     viewModel: BookmarkedViewModel = koinViewModel(),
-    onMovieClick: (Long) -> Unit,
+    onNewsClick: (Long) -> Unit,
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -54,7 +54,7 @@ fun BookmarkedScreenRoot(
         onRemoveBookmark = {
             viewModel.onEvent(BookmarkedEvents.RemoveBookmark(it))
         },
-        onMovieClick = onMovieClick,
+        onNewsClick = onNewsClick,
     )
 }
 
@@ -64,9 +64,9 @@ fun BookmarkedScreen(
     modifier: Modifier = Modifier,
     state: BookmarkedState,
     onRemoveBookmark: (Long) -> Unit,
-    onMovieClick: (Long) -> Unit,
+    onNewsClick: (Long) -> Unit,
 ) {
-    AnimatedContent(targetState = state.movies.isEmpty()) { isListEmpty ->
+    AnimatedContent(targetState = state.news.isEmpty()) { isListEmpty ->
         if (isListEmpty) {
             EmptyListPlaceHolder(
                 modifier = Modifier,
@@ -76,16 +76,16 @@ fun BookmarkedScreen(
             )
         } else {
             LazyColumn(modifier = modifier.fillMaxSize()) {
-                items(state.movies, key = { it.id }) { movie ->
+                items(state.news, key = { it.id }) { news ->
                     ListItem(
                         modifier = Modifier
                             .fillMaxWidth()
                             .animateItem()
                             .clickable {
-                                onMovieClick(movie.id)
+                                onNewsClick(news.id)
                             },
                         headlineContent = {
-                            Text(text = movie.title)
+                            Text(text = news.title)
                         },
                         supportingContent = {
                             FlowRow(
@@ -93,29 +93,29 @@ fun BookmarkedScreen(
                                 maxItemsInEachRow = 3,
                                 maxLines = 1,
                             ) {
-                                Text(text = movie.fullContent)
+                                Text(text = news.fullContent)
                             }
                         },
                         leadingContent = {
-                            val placeholder = painterResource(ir.rezazarchi.faranews.R.drawable.local_movies)
+                            val placeholder = painterResource(ir.rezazarchi.faranews.R.drawable.baseline_newspaper)
                             Image(
                                 modifier = Modifier
                                     .size(56.dp)
                                     .clip(RoundedCornerShape(10)),
                                 contentScale = ContentScale.Crop,
                                 painter = rememberAsyncImagePainter(
-                                    model = movie.imageUrl,
+                                    model = news.imageUrl,
                                     placeholder = placeholder,
                                     error = placeholder,
                                     fallback = placeholder,
                                 ),
-                                contentDescription = movie.title,
+                                contentDescription = news.title,
                             )
                         },
                         trailingContent = {
                             IconButton(
                                 onClick = {
-                                    onRemoveBookmark(movie.id)
+                                    onRemoveBookmark(news.id)
                                 },
                             ) {
                                 Icon(
@@ -139,7 +139,7 @@ private fun BookmarkedScreenPreview() {
 //        BookmarkedScreen(
 //            state = FakeSearchScreenData.searchResultItems,
 //            onRemoveBookmark = {},
-//            onMovieClick = {},
+//            onNewsClick = {},
 //        )
     }
 }

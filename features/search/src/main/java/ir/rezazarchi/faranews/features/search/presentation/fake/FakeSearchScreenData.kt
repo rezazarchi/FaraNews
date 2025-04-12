@@ -1,14 +1,14 @@
 package ir.rezazarchi.faranews.features.search.presentation.fake
 
 import ir.rezazarchi.faranews.features.search.domain.model.SearchedNews
-import ir.rezazarchi.faranews.features.search.presentation.viewmode.SearchMoviesState
-import ir.rezazarchi.faranews.features.search.presentation.viewmode.SearchedMovieWithBookmark
+import ir.rezazarchi.faranews.features.search.presentation.viewmode.SearchNewsState
+import ir.rezazarchi.faranews.features.search.presentation.viewmode.SearchedNewsWithBookmark
 import java.time.Instant
 
 object FakeSearchScreenData {
-    val searchResultItems = SearchMoviesState(
-        movies = listOf(
-            SearchedMovieWithBookmark(
+    val searchResultItems = SearchNewsState(
+        news = listOf(
+            SearchedNewsWithBookmark(
                 SearchedNews(
                     id = 1L,
                     title = "AI Revolutionizes Android Development",
@@ -19,7 +19,7 @@ object FakeSearchScreenData {
                 ),
                 bookmarked = false
             ),
-            SearchedMovieWithBookmark(
+            SearchedNewsWithBookmark(
                 searchedNews = SearchedNews(
                     id = 2L,
                     title = "Kotlin 2.0 Preview Released",
@@ -30,7 +30,7 @@ object FakeSearchScreenData {
                 ),
                 bookmarked = false,
             ),
-            SearchedMovieWithBookmark(
+            SearchedNewsWithBookmark(
                 SearchedNews(
                     id = 3L,
                     title = "Room Database Tips You Didn't Know",

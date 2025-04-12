@@ -1,3 +1,3 @@
 package ir.rezazarchi.faranews.bookmark.domain.model
 
-typealias BookmarkedMovie = Long
+typealias BookmarkedNews = Long

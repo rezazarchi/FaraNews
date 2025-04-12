@@ -15,20 +15,20 @@ import ir.rezazarchi.faranews.database.dao.NewsDao
 import ir.rezazarchi.faranews.database.fake.FakeNewsDao
 import ir.rezazarchi.faranews.database.fake.FakeNewsList
 import ir.rezazarchi.faranews.features.search.data.remote.fake.FakeSearchNewsResponseDto.fakeSearchDto
-import ir.rezazarchi.faranews.features.search.data.remote.mapper.SearchedMoviesMapper.toSearchedMovie
-import ir.rezazarchi.faranews.features.search.data.remote.mapper.SearchedMoviesMapper.toSearchedMovies
+import ir.rezazarchi.faranews.features.search.data.remote.mapper.SearchedNewsMapper.toSearchedMovie
+import ir.rezazarchi.faranews.features.search.data.remote.mapper.SearchedNewsMapper.toSearchedMovies
 import ir.rezazarchi.faranews.features.search.data.remote.service.SearchNewsApiService
 import ir.rezazarchi.faranews.features.search.data.repository.SearchNewsRepositoryImplementation
 import ir.rezazarchi.faranews.features.search.domain.repo.SearchNewsRepository
-import ir.rezazarchi.faranews.features.search.domain.usecase.SearchMoviesUseCase
+import ir.rezazarchi.faranews.features.search.domain.usecase.SearchNewsUseCase
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 
-class SearchMoviesUseCaseTest {
+class SearchNewsUseCaseTest {
 
-    private lateinit var searchUseCase: SearchMoviesUseCase
+    private lateinit var searchUseCase: SearchNewsUseCase
     private lateinit var repository: SearchNewsRepository
     private lateinit var onlineApi: SearchNewsApiService
     private lateinit var cacheDb: NewsDao
@@ -38,7 +38,7 @@ class SearchMoviesUseCaseTest {
         cacheDb = FakeNewsDao()
         onlineApi = mockk(relaxed = true)
         repository = SearchNewsRepositoryImplementation(onlineApi, cacheDb)
-        searchUseCase = SearchMoviesUseCase(repository)
+        searchUseCase = SearchNewsUseCase(repository)
     }
 
     @Test

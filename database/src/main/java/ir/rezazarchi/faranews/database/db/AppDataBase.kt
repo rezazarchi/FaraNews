@@ -6,13 +6,13 @@ import androidx.room.TypeConverters
 import ir.rezazarchi.faranews.database.converter.DateTypeConverter
 import ir.rezazarchi.faranews.database.dao.BookmarkedDao
 import ir.rezazarchi.faranews.database.dao.NewsDao
-import ir.rezazarchi.faranews.database.entity.BookmarkedMovieEntity
+import ir.rezazarchi.faranews.database.entity.BookmarkedNewsEntity
 import ir.rezazarchi.faranews.database.entity.NewsEntity
 
 @Database(
     entities = [
         NewsEntity::class,
-        BookmarkedMovieEntity::class,
+        BookmarkedNewsEntity::class,
     ],
     version = 1,
     exportSchema = false

@@ -8,8 +8,8 @@ import ir.rezazarchi.faranews.core.utils.Constant.SEARCH_QUERIES
 import ir.rezazarchi.faranews.core.utils.safeCall
 import ir.rezazarchi.faranews.database.dao.NewsDao
 import ir.rezazarchi.faranews.database.entity.NewsEntity
-import ir.rezazarchi.faranews.features.search.data.remote.mapper.SearchedMoviesMapper.toNewsEntity
-import ir.rezazarchi.faranews.features.search.data.remote.mapper.SearchedMoviesMapper.toSearchedNews
+import ir.rezazarchi.faranews.features.search.data.remote.mapper.SearchedNewsMapper.toNewsEntity
+import ir.rezazarchi.faranews.features.search.data.remote.mapper.SearchedNewsMapper.toSearchedNews
 import ir.rezazarchi.faranews.features.search.data.remote.service.SearchNewsApiService
 import ir.rezazarchi.faranews.features.search.domain.repo.SearchNewsRepository
 import kotlinx.coroutines.flow.emitAll
@@ -48,8 +48,8 @@ class SearchNewsRepositoryImplementation(
             dao.getYesterdayNews(
                 now.minusDays(1).toLocalDate().atStartOfDay(now.zone).toInstant(),
                 now.toLocalDate().atStartOfDay(now.zone).toInstant().minusNanos(1),
-            ).map { movieEntities ->
-                Result.Success(movieEntities.map { it.toSearchedNews() })
+            ).map { newsEntities ->
+                Result.Success(newsEntities.map { it.toSearchedNews() })
             })
     }
 }

@@ -1,9 +1,9 @@
 package ir.rezazarchi.faranews.navigation.di
 
-import ir.rezazarchi.faranews.bookmark.data.repository.BookmarkedMoviesRepositoryImplementation
-import ir.rezazarchi.faranews.bookmark.domain.repo.BookmarkedMoviesRepository
-import ir.rezazarchi.faranews.bookmark.domain.usecase.BookmarkedMovieDetailedUseCase
-import ir.rezazarchi.faranews.bookmark.domain.usecase.BookmarkedMoviesUseCase
+import ir.rezazarchi.faranews.bookmark.data.repository.BookmarkedNewsRepositoryImplementation
+import ir.rezazarchi.faranews.bookmark.domain.repo.BookmarkedNewsRepository
+import ir.rezazarchi.faranews.bookmark.domain.usecase.BookmarkedNewsDetailedUseCase
+import ir.rezazarchi.faranews.bookmark.domain.usecase.BookmarkedNewsUseCase
 import ir.rezazarchi.faranews.bookmark.domain.usecase.IsBookmarkedUseCase
 import ir.rezazarchi.faranews.bookmark.domain.usecase.ToggleBookmarkUseCase
 import ir.rezazarchi.faranews.features.bookmark.presentation.viewmode.BookmarkedViewModel
@@ -14,9 +14,9 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val bookmarkModule = module {
-    singleOf(::BookmarkedMoviesRepositoryImplementation) bind BookmarkedMoviesRepository::class
-    factoryOf(::BookmarkedMovieDetailedUseCase)
-    factoryOf(::BookmarkedMoviesUseCase)
+    singleOf(::BookmarkedNewsRepositoryImplementation) bind BookmarkedNewsRepository::class
+    factoryOf(::BookmarkedNewsDetailedUseCase)
+    factoryOf(::BookmarkedNewsUseCase)
     factoryOf(::ToggleBookmarkUseCase)
     factoryOf(::IsBookmarkedUseCase)
     viewModelOf(::BookmarkedViewModel)

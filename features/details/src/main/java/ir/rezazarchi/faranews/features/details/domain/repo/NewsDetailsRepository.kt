@@ -5,6 +5,6 @@ import ir.rezazarchi.faranews.core.data.Result
 import ir.rezazarchi.faranews.features.details.domain.model.NewsDetails
 import kotlinx.coroutines.flow.Flow
 
-interface MovieDetailsRepository {
-    fun getMovieDetails(movieId: Long): Flow<Result<NewsDetails, Error>>
+interface NewsDetailsRepository {
+    fun getNewsDetails(newsId: Long): Flow<Result<NewsDetails, Error>>
 }

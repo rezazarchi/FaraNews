@@ -5,7 +5,7 @@ import ir.rezazarchi.faranews.features.search.data.remote.dto.NewsResponseDto
 import ir.rezazarchi.faranews.features.search.domain.model.SearchedNews
 import java.time.Instant
 
-object SearchedMoviesMapper {
+object SearchedNewsMapper {
 
     fun NewsResponseDto.toNewsEntity(query: String): List<NewsEntity> {
         return this.articles.map {

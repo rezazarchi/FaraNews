@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import ir.rezazarchi.faranews.commonui.theme.MetaMovieTheme
+import ir.rezazarchi.faranews.commonui.theme.FaraNewsTheme
 import ir.rezazarchi.faranews.navigation.RootScreen
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MetaMovieTheme {
+            FaraNewsTheme {
                 RootScreen()
             }
         }
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MetaMovieTheme {
+    FaraNewsTheme {
         RootScreen()
     }
 }
