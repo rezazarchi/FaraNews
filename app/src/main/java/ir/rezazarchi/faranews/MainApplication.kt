@@ -1,12 +1,7 @@
 package ir.rezazarchi.faranews
 
 import android.app.Application
-import ir.rezazarchi.faranews.core.di.jsonModule
-import ir.rezazarchi.faranews.core.di.retrofitModule
-import ir.rezazarchi.faranews.navigation.di.bookmarkModule
-import ir.rezazarchi.faranews.navigation.di.databaseModule
-import ir.rezazarchi.faranews.navigation.di.newsDetailsModule
-import ir.rezazarchi.faranews.navigation.di.searchNewsModule
+import ir.rezazarchi.faranews.navigation.di.navigationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.androix.startup.KoinStartup
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -18,12 +13,7 @@ class MainApplication : Application(), KoinStartup {
     override fun onKoinStartup() = koinConfiguration {
         androidContext(this@MainApplication)
         modules(
-            retrofitModule,
-            jsonModule,
-            searchNewsModule,
-            newsDetailsModule,
-            databaseModule,
-            bookmarkModule,
+            navigationModule,
         )
     }
 

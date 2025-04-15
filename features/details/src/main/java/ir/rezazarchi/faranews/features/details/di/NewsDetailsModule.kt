@@ -1,6 +1,7 @@
-package ir.rezazarchi.faranews.navigation.di
+package ir.rezazarchi.faranews.features.details.di
 
 import ir.rezazarchi.faranews.core.di.RETROFIT
+import ir.rezazarchi.faranews.core.di.retrofitModule
 import ir.rezazarchi.faranews.features.details.data.remote.service.NewsDetailsApiService
 import ir.rezazarchi.faranews.features.details.data.repository.NewsDetailsRepositoryImplementation
 import ir.rezazarchi.faranews.features.details.domain.repo.NewsDetailsRepository
@@ -15,6 +16,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val newsDetailsModule = module {
+    includes(retrofitModule)
     single {
         get<Retrofit>(named(RETROFIT)).create(NewsDetailsApiService::class.java)
     }

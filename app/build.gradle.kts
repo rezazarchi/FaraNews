@@ -43,7 +43,6 @@ android {
 
 dependencies {
 
-    implementation(project(":core"))
     implementation(project(":commonui"))
     implementation(project(":navigation"))
 

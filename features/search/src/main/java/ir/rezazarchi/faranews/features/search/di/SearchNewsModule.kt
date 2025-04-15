@@ -1,6 +1,7 @@
-package ir.rezazarchi.faranews.navigation.di
+package ir.rezazarchi.faranews.features.search.di
 
 import ir.rezazarchi.faranews.core.di.RETROFIT
+import ir.rezazarchi.faranews.core.di.retrofitModule
 import ir.rezazarchi.faranews.features.search.data.remote.service.SearchNewsApiService
 import ir.rezazarchi.faranews.features.search.data.repository.SearchNewsRepositoryImplementation
 import ir.rezazarchi.faranews.features.search.domain.repo.SearchNewsRepository
@@ -15,6 +16,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val searchNewsModule = module {
+    includes(retrofitModule)
     single {
         get<Retrofit>(named(RETROFIT)).create(SearchNewsApiService::class.java)
     }

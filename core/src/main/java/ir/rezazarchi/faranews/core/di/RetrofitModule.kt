@@ -19,6 +19,8 @@ const val BASE_URL = "BASE_URL"
 
 val retrofitModule = module {
 
+    includes(jsonModule)
+
     single<Long>(named(READ_TIMEOUT)) { 30 * 1000 }
     single<Long>(named(WRITE_TIMEOUT)) { 10 * 1000 }
     single<Long>(named(CONNECTION_TIMEOUT)) { 10 * 1000 }

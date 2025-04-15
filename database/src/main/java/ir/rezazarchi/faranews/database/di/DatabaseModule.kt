@@ -1,4 +1,4 @@
-package ir.rezazarchi.faranews.navigation.di
+package ir.rezazarchi.faranews.database.di
 
 import ir.rezazarchi.faranews.database.db.AppDataBase
 import ir.rezazarchi.faranews.database.db.DatabaseFactory
